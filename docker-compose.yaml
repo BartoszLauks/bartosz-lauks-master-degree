@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  bartosz-lauks-master-degree-mysql:
+    image: mysql:5.7
+    command: --sql_mode=""
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    volumes:
+      - bartosz-lauks-master-degree_db_data:/var/lib/mysql
+
+  bartosz-lauks-master-degree-php:
+    build: docker/php-fpm
+    working_dir: /app
+
+    volumes:
+      - ./docker/php-fpm/php.ini:/usr/local/etc/php/php.ini:ro
+      - .:/app:cached
+    depends_on:
+      - bartosz-lauks-master-degree-mysql
+
+  bartosz-lauks-master-degree-nginx:
+    image: nginx:latest
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - .:/app:cached
+    depends_on:
+      - bartosz-lauks-master-degree-php
+
+volumes:
+  bartosz-lauks-master-degree_db_data:

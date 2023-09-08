@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  bartosz-lauks-master-degree-mysql:
+    container_name: bartosz-lauks-master-degree-mysql-dev
+    ports:
+      - '33063:3306'
+
+  bartosz-lauks-master-degree-php:
+    container_name: bartosz-lauks-master-degree-php-dev
+    environment:
+      APP_ENV: dev
+      APP_VERSION: dev
+      DATABASE_URL: mysql://root:@bartosz-lauks-master-degree-mysql:3306/bartosz-lauks-master-degree_dev
+
+  bartosz-lauks-master-degree-nginx:
+    container_name: bartosz-lauks-master-degree-nginx-dev
+    ports:
+      - '8083:80'
