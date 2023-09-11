@@ -12,6 +12,8 @@ RUN apk update \
     libxml2-dev \
     libzip-dev
 
+RUN apk yarn
+
 RUN touch /var/log/schedule.log
 RUN chmod 0777 /var/log/schedule.log
 
