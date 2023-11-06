@@ -17,3 +17,5 @@ services:
     container_name: bartosz-lauks-master-degree-nginx-prod
     ports:
       - '8081:80'
+
+# TODO add rabbitmq for prod environment

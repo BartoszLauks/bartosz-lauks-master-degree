@@ -21,7 +21,11 @@ ADD crontab /etc/crontabs/root
 
 RUN docker-php-ext-configure intl
 
-RUN docker-php-ext-install pdo_mysql mysqli zip opcache intl
+RUN apk add --no-cache rabbitmq-c-dev && \
+    mkdir -p /usr/src/php/ext/amqp && \
+    curl -fsSL https://pecl.php.net/get/amqp | tar xvz -C "/usr/src/php/ext/amqp" --strip 1
+
+RUN docker-php-ext-install pdo_mysql mysqli zip opcache intl amqp
 
 RUN docker-php-ext-enable opcache intl
 

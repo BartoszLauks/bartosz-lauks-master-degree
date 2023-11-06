@@ -7,7 +7,7 @@ namespace DoctrineMigrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-final class Version20230912093937 extends AbstractMigration
+final class Version20231103205632 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -16,7 +16,7 @@ final class Version20230912093937 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $this->addSql('ALTER TABLE user ADD uuid CHAR(36) NOT NULL COMMENT \'(DC2Type:guid)\'');
+        $this->addSql('ALTER TABLE user ADD uuid BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\'');
     }
 
     public function down(Schema $schema): void

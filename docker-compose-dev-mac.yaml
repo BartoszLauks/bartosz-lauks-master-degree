@@ -30,3 +30,5 @@ volumes:
     external: true
   bartosz-lauks-master-degree-api-app-sync:
     external: true
+
+# TODO add rabbitmq for dev-mac environment

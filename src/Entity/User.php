@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -18,12 +22,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Assert\Type(
+        type: 'integer',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Email()]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Assert\Unique()]
     private array $roles = [];
 
     /**
@@ -32,11 +43,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::GUID)]
-    private ?string $uuid = null;
+    #[Assert\Uuid]
+    #[ORM\Column(type: 'uuid')]
+    private Uuid $uuid;
 
+    #[Assert\Type(
+        type: 'bool',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
     #[ORM\Column(type: 'boolean')]
     private bool $isVerified = false;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Test::class)]
+    private Collection $tests;
+
+    public function __construct()
+    {
+        $this->tests = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -102,12 +126,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
     }
 
-    public function getUuid(): ?string
+    public function getUuid(): ?Uuid
     {
         return $this->uuid;
     }
 
-    public function setUuid(string $uuid): static
+    public function setUuid(Uuid $uuid): static
     {
         $this->uuid = $uuid;
 
@@ -122,6 +146,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Test>
+     */
+    public function getTests(): Collection
+    {
+        return $this->tests;
+    }
+
+    public function addTest(Test $test): static
+    {
+        if (!$this->tests->contains($test)) {
+            $this->tests->add($test);
+            $test->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTest(Test $test): static
+    {
+        if ($this->tests->removeElement($test)) {
+            // set the owning side to null (unless already changed)
+            if ($test->getUser() === $this) {
+                $test->setUser(null);
+            }
+        }
 
         return $this;
     }

@@ -1,0 +1,22 @@
+{% extends 'Header.html.twig' %}
+
+{% block title %}
+    BFS Algorithm
+{% endblock %}
+
+{% block body %}
+    <h1>Algorytm BFS (Breadth-First Search)</h1>
+    <p>Algorytm BFS (Breadth-First Search), czyli przeszukiwanie wszerz, jest jednym z podstawowych algorytmów używanych w informatyce do przeszukiwania grafów i drzew. Jego głównym celem jest odnalezienie najkrótszej ścieżki między dwoma wierzchołkami w grafie lub znalezienie wszystkich wierzchołków w grafie osiągalnych z danego wierzchołka. Oto kroki, które składają się na algorytm BFS:</p>
+    <ol>
+        <li>Rozpocznij od wybranego wierzchołka początkowego (źródła).</li>
+        <li>Dodaj ten wierzchołek do kolejki FIFO (First-In-First-Out).</li>
+        <li>Dopóki kolejka nie jest pusta, kontynuuj działanie algorytmu:</li>
+        <ol type="a">
+            <li>Usuń wierzchołek z przodu kolejki (ten, który był w niej najdłużej) i oznacz go jako odwiedzony.</li>
+            <li>Dla każdego sąsiedniego wierzchołka, który nie został odwiedzony i nie jest jeszcze w kolejce, dodaj go do kolejki.</li>
+        </ol>
+        <li>Powtarzaj kroki 3a i 3b, aż kolejka stanie się pusta. Wtedy algorytm BFS zakończy działanie.</li>
+    </ol>
+    <p>Wynikiem działania algorytmu BFS jest ścieżka od wierzchołka źródłowego do wszystkich innych osiągalnych wierzchołków (jeśli taka ścieżka istnieje), a także informacja o odległości od wierzchołka źródłowego do każdego odwiedzonego wierzchołka.</p>
+    <p>Algorytm BFS jest często wykorzystywany w takich zadaniach jak znajdowanie najkrótszej ścieżki w grafie, badanie spójności grafu, znajdowanie cykli, a także w rozmaitych problemach związanym z grafami, takich jak przeszukiwanie stron internetowych, znajdowanie najkrótszych tras w mapach, analiza sieci społecznościowych itp. Algorytm BFS jest również używany w algorytmach grafowych, takich jak algorytm Dijkstry i algorytm A*.</p>
+{% endblock %}

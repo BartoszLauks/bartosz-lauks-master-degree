@@ -6,6 +6,7 @@
 /public/bundles/
 /var/
 /vendor/
+public/
 ###< symfony/framework-bundle ###
 
 ### PhpStorm ###
