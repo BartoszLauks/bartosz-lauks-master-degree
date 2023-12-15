@@ -12,10 +12,14 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ORM\Entity(repositoryClass: TestRepository::class)]
 class Test
 {
-    const ALGORITHM = ['BFS', 'DFS', 'Dijkstra'];
+    const ALGORITHM = ['BFS', 'DFS', 'Dijkstra', 'Kruskal', 'Prim', 'TopologicalSorting'];
     const STATUS = ['WAITING', 'CHECKED', 'VERIFIED', 'ERROR'];
-
     const LANGUAGE = ['PYTHON', 'C++', 'JAVA'];
+    const TOKEN_LENGTH = 32;
+    const MINE_TYPES = [
+        'PYTHON' => 'text/x-python'
+    ];
+
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -51,6 +55,9 @@ class Test
     #[Assert\Uuid]
     #[ORM\Column(type: 'uuid')]
     private Uuid $uuid;
+
+    #[ORM\Column(length: 255)]
+    private ?string $token = null;
 
 
     public function getId(): ?int
@@ -150,6 +157,18 @@ class Test
     public function setUuid(Uuid $uuid): static
     {
         $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): static
+    {
+        $this->token = $token;
 
         return $this;
     }

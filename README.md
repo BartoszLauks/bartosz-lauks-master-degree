@@ -1,6 +1,6 @@
 ## LISTA ALGORYTMOW
 
-- Przeszukiwanie w szerz (Breadth-First Search, BFS)
+- Przeszukiwanie w szerz (Breadth-First Search, BFS) 
 - Przeszukiwanie w głąb (Depth-First Search, DFS)
 - Algorytm Dijkstry
 - Algorytm Bellmana-Forda
@@ -37,3 +37,7 @@ Sprawdź, jak algorytm BFS reaguje, gdy wierzchołek początkowy i wierzchołek 
 - Graf niespójny:
 
 Utwórz graf niespójny, który składa się z dwóch lub więcej składowych. Przetestuj algorytm BFS na takim grafie i upewnij się, że działa poprawnie, odwiedzając tylko wierzchołki w jednej składowej, zaczynając od odpowiedniego wierzchołka początkowego.
+
+## Wstępna dokumentacja
+# Błąd przy budowaniu aplikacji
+- Jeśli pojawi sie bład przy budowanu aplikacji wykonaj budowanie ponownie. Bład obrazu Docker

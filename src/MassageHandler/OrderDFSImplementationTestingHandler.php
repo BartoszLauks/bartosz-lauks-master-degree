@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\MassageHandler;
 
-use App\Massage\AlgorithmToTest;
+use App\Massage\DFSImplementationTesting;
 use App\Repository\TestRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-readonly class OrderAlgorithmTestingHandler
+readonly class OrderDFSImplementationTestingHandler
 {
     public function __construct(
         private readonly TestRepository $testRepository,
@@ -18,7 +18,7 @@ readonly class OrderAlgorithmTestingHandler
     ) {
     }
 
-    public function __invoke(AlgorithmToTest $algorithmToTest): void
+    public function __invoke(DFSImplementationTesting $algorithmToTest): void
     {
         $uuid = $algorithmToTest->getTest()->getUuid();
         $test = $this->testRepository->findOneBy([

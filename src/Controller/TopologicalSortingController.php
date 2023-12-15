@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Test;
-use App\Form\BFSTestingImplementationType;
-use App\Massage\AlgorithmToTest;
-use App\Massage\BFSImplementationTesting;
+use App\Form\TopologicalSortingTestingImplementationType;
+use App\Massage\TopologicalSortingImplementationTesting;
 use App\Repository\TestRepository;
 use App\Service\RandomStringGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,13 +18,9 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
 
-#[Route('/bfs', name: 'app_bfs_algorithm_')]
-class BFSController extends AbstractController
+#[Route('/topological_sorting', name: 'app_topological_sorting_')]
+class TopologicalSortingController extends AbstractController
 {
-    const MINE_TYPES = [
-        'PYTHON' => 'text/x-python'
-    ];
-
     public function __construct(
         private readonly ParameterBagInterface $parameterBag,
         private readonly MessageBusInterface $messageBus,
@@ -35,10 +30,12 @@ class BFSController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'index')]
+    #[Route('/', name: 'app_topological_sorting')]
     public function index(): Response
     {
-        return $this->render('bfs/index.html.twig');
+        return $this->render('topological_sorting/index.html.twig', [
+            'controller_name' => 'TopologicalSortingController',
+        ]);
     }
 
     #[Route('/create', name: 'create')]
@@ -46,7 +43,7 @@ class BFSController extends AbstractController
     {
         $test = new Test();
 
-        $form = $this->createForm(BFSTestingImplementationType::class, $test);
+        $form = $this->createForm(TopologicalSortingTestingImplementationType::class, $test);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -55,25 +52,27 @@ class BFSController extends AbstractController
             $test->setToken($this->stringGenerator->getToken(Test::TOKEN_LENGTH));
 
             /** @var UploadedFile $file */
-            $file = ($request->files->get('bfs_testing_implementation')['File']);
+            $file = ($request->files->get('topological_sorting_testing_implementation')['File']);
             if ($file) {
                 if ($file->getClientMimeType() !== Test::MINE_TYPES[$test->getLanguage()]) {
                     throw new HttpException(Response::HTTP_NOT_FOUND, 'Expansion of the uploaded file is not supported.');
                 }
 
-                $file->move($this->parameterBag->get('uploads_dir_BFS').$test->getUuid(), 'userBFS.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BFS').'main.py', $this->parameterBag->get('uploads_dir_BFS').$test->getUuid().'/main.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BFS').'computationalComplexityMain.py', $this->parameterBag->get('uploads_dir_BFS').$test->getUuid().'/computationalComplexityMain.py');
+                $file->move($this->parameterBag->get('uploads_dir_TopologicalSorting') . $test->getUuid(), 'userTopologicalSorting.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_TopologicalSorting') . 'main.py',
+                    $this->parameterBag->get('uploads_dir_TopologicalSorting') . $test->getUuid() . '/main.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_TopologicalSorting') . 'computationalComplexityMain.py',
+                    $this->parameterBag->get('uploads_dir_TopologicalSorting') . $test->getUuid() . '/computationalComplexityMain.py');
             }
             $this->testRepository->save($test);
 
-            $this->messageBus->dispatch(new BFSImplementationTesting($test));
+            $this->messageBus->dispatch(new TopologicalSortingImplementationTesting($test));
             $this->addFlash('success', 'Your algorithm implementation has been added to the overview. This may take a while.');
 
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('bfs/create.html.twig', [
+        return $this->render('topological_sorting/create.html.twig', [
             'form' => $form
         ]);
     }
@@ -81,11 +80,11 @@ class BFSController extends AbstractController
     #[Route('/test')]
     public function test()
     {
-        $test = $this->testRepository->find(22);
+        $test = $this->testRepository->find(27);
 
         if ($test->getStatus() !== 'VERIFIED' && $test->getStatus() !== 'ERROR') {
             $token = $test->getToken();
-            $testPath = sprintf('%s%s',  $this->parameterBag->get('uploads_dir_BFS'), $test->getUuid());
+            $testPath = sprintf('%s%s',  $this->parameterBag->get('uploads_dir_TopologicalSorting'), $test->getUuid());
             exec(sprintf('python %s/main.py %s > %s/output.txt', $testPath, $test->getToken(), $testPath));
             $mainTestPath = sprintf('%s%s', $testPath, '/output.txt');
             if ($this->filesystem->exists($mainTestPath)) {
@@ -103,10 +102,11 @@ class BFSController extends AbstractController
                         $test->setStatus('VERIFIED');
                         $test->setResponse('Testing completed successfully.');
                     }
+
                 }
             } else {
                 $test->setStatus('ERROR');
-                $test->setResponse("Your implementation's main test result was not received. Contact with your administrator.");
+                $test->setResponse("Your implementation's main test result was not received. Contact your administrator.");
             }
             $this->testRepository->save($test);
             dd("done");

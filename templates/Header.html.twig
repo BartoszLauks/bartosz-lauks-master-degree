@@ -30,6 +30,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_bfs_algorithm_create') }}">BFS</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_dfs_algorithm_create') }}">DFS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_dijkstra_algorithm_create') }}">Dijkstra</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_kruskal_algorithm_create') }}">Kruskal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_prim_algorithm_create') }}">Prim</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_topological_sorting_create') }}">Topological Sorting</a>
+                    </li>
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     <li class="nav-item">
@@ -66,7 +81,7 @@
         {% endblock %}
 
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <p class="col-md-4 mb-0 text-muted">© 2022 Company, Inc</p>
+            <p class="col-md-4 mb-0 text-muted">© 2024 Bartosz Lauks</p>
 
             <ul class="nav col-md-4 justify-content-end">
                 <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
