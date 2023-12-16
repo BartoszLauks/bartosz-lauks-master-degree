@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\MassageHandler;
 
-use App\Massage\DFSImplementationTesting;
-use App\Massage\DijkstraImplementationTesting;
 use App\Massage\KruskalImplementationTesting;
 use App\Repository\TestRepository;
 use Symfony\Component\Filesystem\Filesystem;

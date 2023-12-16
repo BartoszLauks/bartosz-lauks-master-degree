@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\MassageHandler;
 
-use App\Massage\DFSImplementationTesting;
-use App\Massage\DijkstraImplementationTesting;
-use App\Massage\KruskalImplementationTesting;
+use App\Massage\PrimImplementationTesting;
 use App\Repository\TestRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -20,7 +18,7 @@ readonly class OrderPrimImplementationTestingHandler
     ) {
     }
 
-    public function __invoke(KruskalImplementationTesting $algorithmToTest): void
+    public function __invoke(PrimImplementationTesting $algorithmToTest): void
     {
         $uuid = $algorithmToTest->getTest()->getUuid();
         $test = $this->testRepository->findOneBy([

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\MassageHandler;
 
-use App\Massage\DijkstraImplementationTesting;
+use App\Massage\BellmanFordImplementationTesting;
 use App\Repository\TestRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-readonly class OrderDijkstraImplementationTestingHandler
+readonly class OrderBellmanFordImplementationTestingHandler
 {
     public function __construct(
         private readonly TestRepository $testRepository,
@@ -18,7 +18,7 @@ readonly class OrderDijkstraImplementationTestingHandler
     ) {
     }
 
-    public function __invoke(DijkstraImplementationTesting $algorithmToTest): void
+    public function __invoke(BellmanFordImplementationTesting $algorithmToTest): void
     {
         $uuid = $algorithmToTest->getTest()->getUuid();
         $test = $this->testRepository->findOneBy([

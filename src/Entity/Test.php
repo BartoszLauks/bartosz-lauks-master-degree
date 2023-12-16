@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ORM\Entity(repositoryClass: TestRepository::class)]
 class Test
 {
-    const ALGORITHM = ['BFS', 'DFS', 'Dijkstra', 'Kruskal', 'Prim', 'TopologicalSorting'];
+    const ALGORITHM = ['BFS', 'DFS', 'Dijkstra', 'Kruskal', 'Prim', 'TopologicalSorting', 'BellmanFord'];
     const STATUS = ['WAITING', 'CHECKED', 'VERIFIED', 'ERROR'];
     const LANGUAGE = ['PYTHON', 'C++', 'JAVA'];
     const TOKEN_LENGTH = 32;

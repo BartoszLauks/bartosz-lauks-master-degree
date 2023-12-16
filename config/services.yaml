@@ -16,6 +16,8 @@ parameters:
     algorithms_dir_Prim: '%kernel.project_dir%/algorithms/Prim/'
     uploads_dir_TopologicalSorting: '%kernel.project_dir%/implementations/TopologicalSorting/'
     algorithms_dir_TopologicalSorting: '%kernel.project_dir%/algorithms/TopologicalSorting/'
+    uploads_dir_BellmanFord: '%kernel.project_dir%/implementations/BellmanFord/'
+    algorithms_dir_BellmanFord: '%kernel.project_dir%/algorithms/BellmanFord/'
 
 services:
     # default configuration for services in *this* file
