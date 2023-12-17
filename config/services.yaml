@@ -20,6 +20,8 @@ parameters:
     algorithms_dir_BellmanFord: '%kernel.project_dir%/algorithms/BellmanFord/'
     uploads_dir_FloydWarshall: '%kernel.project_dir%/implementations/FloydWarshall/'
     algorithms_dir_FloydWarshall: '%kernel.project_dir%/algorithms/FloydWarshall/'
+    uploads_dir_Johnson: '%kernel.project_dir%/implementations/Johnson/'
+    algorithms_dir_Johnson: '%kernel.project_dir%/algorithms/Johnson/'
 
 services:
     # default configuration for services in *this* file
