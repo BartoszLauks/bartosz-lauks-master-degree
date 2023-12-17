@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Test;
 use App\Form\JohnsonTestingImplementationType;
 use App\Massage\DijkstraImplementationTesting;
+use App\Massage\JohnsonImplementationTesting;
 use App\Repository\TestRepository;
 use App\Service\RandomStringGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,7 +64,7 @@ class JohnsonController extends AbstractController
             }
             $this->testRepository->save($test);
 
-            $this->messageBus->dispatch(new DijkstraImplementationTesting($test));
+            $this->messageBus->dispatch(new JohnsonImplementationTesting($test));
             $this->addFlash('success', 'Your algorithm implementation has been added to the overview. This may take a while.');
 
             return $this->redirectToRoute('app_home');

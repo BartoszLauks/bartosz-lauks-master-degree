@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Test;
 use App\Form\FloydWarshallImplementationType;
 use App\Massage\DijkstraImplementationTesting;
+use App\Massage\FloydWarshallImplementationTesting;
 use App\Repository\TestRepository;
 use App\Service\RandomStringGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,7 +65,7 @@ class FloydWarshallController extends AbstractController
             }
             $this->testRepository->save($test);
 
-            $this->messageBus->dispatch(new DijkstraImplementationTesting($test));
+            $this->messageBus->dispatch(new FloydWarshallImplementationTesting($test));
             $this->addFlash('success', 'Your algorithm implementation has been added to the overview. This may take a while.');
 
             return $this->redirectToRoute('app_home');

@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Test;
-use App\Form\BellmanFordTestingImplementationType;
-use App\Massage\BellmanFordImplementationTesting;
-use App\Massage\DijkstraImplementationTesting;
+use App\Form\FleuryTestingImplementationType;
+use App\Massage\FleuryImplementationTesting;
 use App\Repository\TestRepository;
 use App\Service\RandomStringGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,8 +18,8 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
 
-#[Route('/bellman_ford', name: 'app_bellman_ford_')]
-class BellmanFordController extends AbstractController
+#[Route('/fleury', name: 'app_fleury_')]
+class FleuryController extends AbstractController
 {
     public function __construct(
         private readonly ParameterBagInterface $parameterBag,
@@ -31,11 +30,11 @@ class BellmanFordController extends AbstractController
     ) {
     }
 
-    #[Route('', name: 'app_bellman_ford')]
+    #[Route('/', name: 'app_fleury')]
     public function index(): Response
     {
-        return $this->render('bellman_ford/index.html.twig', [
-            'controller_name' => 'BellmanFordController',
+        return $this->render('fleury/index.html.twig', [
+            'controller_name' => 'FleuryController',
         ]);
     }
 
@@ -44,7 +43,7 @@ class BellmanFordController extends AbstractController
     {
         $test = new Test();
 
-        $form = $this->createForm(BellmanFordTestingImplementationType::class, $test);
+        $form = $this->createForm(FleuryTestingImplementationType::class, $test);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,19 +52,19 @@ class BellmanFordController extends AbstractController
             $test->setToken($this->stringGenerator->getToken(Test::TOKEN_LENGTH));
 
             /** @var UploadedFile $file */
-            $file = ($request->files->get('bellman_ford_testing_implementation')['File']);
+            $file = ($request->files->get('fleury_testing_implementation')['File']);
             if ($file) {
                 if ($file->getClientMimeType() !== Test::MINE_TYPES[$test->getLanguage()]) {
                     throw new HttpException(Response::HTTP_NOT_FOUND, 'Expansion of the uploaded file is not supported.');
                 }
 
-                $file->move($this->parameterBag->get('uploads_dir_BellmanFord').$test->getUuid(), 'userBellmanFord.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BellmanFord').'main.py', $this->parameterBag->get('uploads_dir_BellmanFord').$test->getUuid().'/main.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BellmanFord').'computationalComplexityMain.py', $this->parameterBag->get('uploads_dir_BellmanFord').$test->getUuid().'/computationalComplexityMain.py');
+                $file->move($this->parameterBag->get('uploads_dir_Fleury') . $test->getUuid(), 'userFleury.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Fleury') . 'main.py', $this->parameterBag->get('uploads_dir_Fleury') . $test->getUuid() . '/main.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Fleury') . 'computationalComplexityMain.py', $this->parameterBag->get('uploads_dir_Fleury') . $test->getUuid() . '/computationalComplexityMain.py');
             }
             $this->testRepository->save($test);
 
-            $this->messageBus->dispatch(new BellmanFordImplementationTesting($test));
+            $this->messageBus->dispatch(new FleuryImplementationTesting($test));
             $this->addFlash('success', 'Your algorithm implementation has been added to the overview. This may take a while.');
 
             return $this->redirectToRoute('app_home');
@@ -79,11 +78,11 @@ class BellmanFordController extends AbstractController
     #[Route('/test')]
     public function test()
     {
-        $test = $this->testRepository->find(28);
+        $test = $this->testRepository->find(31);
 
         if ($test->getStatus() !== 'VERIFIED' && $test->getStatus() !== 'ERROR') {
             $token = $test->getToken();
-            $testPath = sprintf('%s%s',  $this->parameterBag->get('uploads_dir_BellmanFord'), $test->getUuid());
+            $testPath = sprintf('%s%s',  $this->parameterBag->get('uploads_dir_Fleury'), $test->getUuid());
             exec(sprintf('python %s/main.py %s > %s/output.txt', $testPath, $test->getToken(), $testPath));
             $mainTestPath = sprintf('%s%s', $testPath, '/output.txt');
             if ($this->filesystem->exists($mainTestPath)) {
