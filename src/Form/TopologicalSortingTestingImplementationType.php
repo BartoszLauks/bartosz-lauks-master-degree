@@ -19,7 +19,6 @@ class TopologicalSortingTestingImplementationType extends AbstractType
                 'data' => 'TopologicalSorting',
                 'attr' => ['readonly' => true]
             ])
-            ->add('Type')
             ->add('Language', TextType::class, [
                 'data' => 'PYTHON',
                 'attr' => ['readonly' => true]

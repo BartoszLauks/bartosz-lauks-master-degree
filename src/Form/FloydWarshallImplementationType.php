@@ -19,7 +19,6 @@ class FloydWarshallImplementationType extends AbstractType
                 'data' => 'FloydWarshall',
                 'attr' => ['readonly' => true]
             ])
-            ->add('Type')
             ->add('Language', TextType::class, [
                 'data' => 'PYTHON',
                 'attr' => ['readonly' => true]

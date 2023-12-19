@@ -95,7 +95,7 @@ class BFSController extends AbstractController
                     $test->setStatus('ERROR');
                     $test->setResponse('An error was encountered.');
                 } else {
-                    exec(sprintf('python %s/computationalComplexityMain.py %s >> %s/output.txt', $testPath, $test->getToken(), $testPath));
+                    exec(sprintf('python %s/computationalComplexityMain.py %s >> %s/output.txt', $testPath, $test->getToken(), $testPath)); // TODO : What in case error python script. Check Start and Finish Flags
                     if (is_int(strpos($fileContent, $errorFlag))) {
                         $test->setStatus('ERROR');
                         $test->setResponse('An error was encountered.');

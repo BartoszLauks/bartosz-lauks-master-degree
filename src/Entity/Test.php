@@ -9,12 +9,18 @@ use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
+#[ORM\HasLifecycleCallbacks()]
 #[ORM\Entity(repositoryClass: TestRepository::class)]
 class Test
 {
     const ALGORITHM = ['BFS', 'DFS', 'Dijkstra', 'Kruskal', 'Prim', 'TopologicalSorting', 'BellmanFord', 'FloydWarshall',
         'Johnson', 'Fleury'];
-    const STATUS = ['WAITING', 'CHECKED', 'VERIFIED', 'ERROR'];
+    const STATUS = [
+        'WAITING' => 'WAITING',
+        'CHECKED' => 'CHECKED',
+        'VERIFIED' => 'VERIFIED',
+        'ERROR' => 'ERROR'
+    ];
     const LANGUAGE = ['PYTHON', 'C++', 'JAVA'];
     const TOKEN_LENGTH = 32;
     const MINE_TYPES = [
@@ -37,7 +43,7 @@ class Test
     private ?string $algorithm = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $type = null;
+    private ?string $type = 'Main & Computational complexity';
 
     #[Assert\Choice(choices: self::STATUS, message: 'Unknown status')]
     #[ORM\Column(length: 255)]
@@ -59,6 +65,12 @@ class Test
 
     #[ORM\Column(length: 255)]
     private ?string $token = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
 
 
     public function getId(): ?int
@@ -170,6 +182,33 @@ class Test
     public function setToken(string $token): static
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    #[ORM\PrePersist()]
+    public function setCreatedAt(): static
+    {
+        $this->createdAt = new \DateTimeImmutable('now');
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
+    public function setUpdatedAt(): static
+    {
+        $this->updatedAt = new \DateTimeImmutable('now');
 
         return $this;
     }

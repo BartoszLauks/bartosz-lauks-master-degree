@@ -21,7 +21,6 @@ class BFSTestingImplementationType extends AbstractType
                 'data' => 'BFS',
                 'attr' => ['readonly' => true]
             ])
-            ->add('Type')
             ->add('Language', TextType::class, [
                 'data' => 'PYTHON',
                 'attr' => ['readonly' => true]

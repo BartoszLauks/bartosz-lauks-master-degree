@@ -19,7 +19,6 @@ class JohnsonTestingImplementationType extends AbstractType
                 'data' => 'Johnson',
                 'attr' => ['readonly' => true]
             ])
-            ->add('Type')
             ->add('Language', TextType::class, [
                 'data' => 'PYTHON',
                 'attr' => ['readonly' => true]

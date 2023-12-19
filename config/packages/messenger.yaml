@@ -12,6 +12,16 @@ framework:
         routing:
             # Route your messages to the transports
             'App\Massage\AlgorithmToTest': async
+            'App\Massage\BellmanFordImplementationTesting': async
+            'App\Massage\BFSImplementationTesting': async
+            'App\Massage\DFSImplementationTesting': async
+            'App\Massage\DijkstraImplementationTesting': async
+            'App\Massage\FleuryImplementationTesting': async
+            'App\Massage\FloydWarshallImplementationTesting': async
+            'App\Massage\JohnsonImplementationTesting': async
+            'App\Massage\KruskalImplementationTesting': async
+            'App\Massage\PrimImplementationTesting': async
+            'App\Massage\TopologicalSortingImplementationTesting': async
 
 # when@test:
 #    framework:

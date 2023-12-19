@@ -19,7 +19,6 @@ class DFSTestingImplementationType extends AbstractType
                 'data' => 'DFS',
                 'attr' => ['readonly' => true]
             ])
-            ->add('Type')
             ->add('Language', TextType::class, [
                 'data' => 'PYTHON',
                 'attr' => ['readonly' => true]

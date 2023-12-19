@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Test;
+use App\Enum\OutputFlags;
 use App\Form\DFSTestingImplementationType;
 use App\Massage\AlgorithmToTest;
 use App\Massage\DFSImplementationTesting;
@@ -80,7 +81,7 @@ class DFSController extends AbstractController
     #[Route('/test')]
     public function test()
     {
-        $test = $this->testRepository->find(23);
+        $test = $this->testRepository->find(35);
 
         if ($test->getStatus() !== 'VERIFIED' && $test->getStatus() !== 'ERROR') {
             $token = $test->getToken();
@@ -89,26 +90,32 @@ class DFSController extends AbstractController
             $mainTestPath = sprintf('%s%s', $testPath, '/output.txt');
             if ($this->filesystem->exists($mainTestPath)) {
                 $fileContent = file_get_contents($mainTestPath);
-                $errorFlag = sprintf('%s %s', $token, 'ERROR');
+                $errorFlag = sprintf('%s %s', $token, OutputFlags::ERROR->flag());
                 if (is_int(strpos($fileContent, $errorFlag))) {
-                    $test->setStatus('ERROR');
+                    $test->setStatus(OutputFlags::ERROR->flag());
                     $test->setResponse('An error was encountered.');
                 } else {
                     exec(sprintf('python %s/computationalComplexityMain.py %s >> %s/output.txt', $testPath, $test->getToken(), $testPath));
                     if (is_int(strpos($fileContent, $errorFlag))) {
-                        $test->setStatus('ERROR');
+                        $test->setStatus(OutputFlags::ERROR->flag());
                         $test->setResponse('An error was encountered.');
                     } else {
-                        $test->setStatus('VERIFIED');
+                        $fileContent = file_get_contents($mainTestPath);
+                        $phrase = sprintf('%s %s', $token, OutputFlags::PEEK_MEMORY_USAGE_BY_YOUR_IMPLEMENTATION->flag());
+                        if (preg_match('/' . $phrase . '(\d+)/', $fileContent, $matches)) {
+                            if ($matches[1]) {
+                                $test->setResult(intval($matches[1]));
+                            }
+                        }
+                        $test->setStatus(Test::STATUS['']);
                         $test->setResponse('Testing completed successfully.');
                     }
                 }
             } else {
-                $test->setStatus('ERROR');
+                $test->setStatus(OutputFlags::ERROR->flag());
                 $test->setResponse("Your implementation's main test result was not received. Contact your administrator.");
             }
             $this->testRepository->save($test);
-            dd("done");
         }
 
         dd("Miss");
