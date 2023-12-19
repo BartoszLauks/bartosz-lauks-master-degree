@@ -57,6 +57,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Test::class)]
     private Collection $tests;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Gender $gender = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updatedAt = null;
+
     public function __construct()
     {
         $this->tests = new ArrayCollection();
@@ -176,6 +185,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $test->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGender(): ?Gender
+    {
+        return $this->gender;
+    }
+
+    public function setGender(?Gender $gender): static
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    #[ORM\PrePersist()]
+    public function setCreatedAt(): static
+    {
+        $this->createdAt = new \DateTimeImmutable('now');
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
+    public function setUpdatedAt(): static
+    {
+        $this->updatedAt = new \DateTimeImmutable('now');
 
         return $this;
     }

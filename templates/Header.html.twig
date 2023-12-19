@@ -7,6 +7,44 @@
         <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2103/2103633.png">
         {% block stylesheets %}
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto&display=swap');
+                @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+                html,
+                body {
+                    font-family: 'Roboto', sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    min-height: 100vh;
+                    display: flex;
+                    flex-direction: column;
+                }
+                /*main {*/
+                /*    flex: 1;*/
+                /*}*/
+                #container {
+                    min-height:100%;
+                    position:relative;
+                }
+                #header {
+                    background-image: linear-gradient(to bottom right, #7BA4A8, #618285);
+                    position: fixed;
+                    right: 0;
+                    left: 0;
+                }
+                #footer {
+                    position: fixed;
+                    left: 0;
+                    bottom: 0;
+                    width: 100%;
+                    text-align: center;
+                }
+                #under_header {
+                    height: 56px;
+                    position: static;
+                    width: 100%;
+                }
+            </style>
         {% endblock %}
 
         {% block javascripts %}
@@ -16,70 +54,78 @@
         {% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand" href="{{ path('app_home') }}">Home</a>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Disable<span class="sr-only">(current)</span></a>
-                    </li>
-                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_bfs_algorithm_create') }}">BFS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_dfs_algorithm_create') }}">DFS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_dijkstra_algorithm_create') }}">Dijkstra</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_kruskal_algorithm_create') }}">Kruskal</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_prim_algorithm_create') }}">Prim</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_topological_sorting_create') }}">Topological Sorting</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_bellman_ford_create') }}">Bellman Ford</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_floyd_warshall_create') }}">Floyd Warshall</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_johnson_create') }}">Johnson</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_fleury_create') }}">Fleury</a>
-                    </li>
-                    {% endif %}
-                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_login') }}">Sign in</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="{{ path('app_register') }}">Sign up !</a>
-                    </li>
-                    {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
-        </nav>
+    <div id="container">
+        <div id="header">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="{{ path('app_home') }}">Home</a>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+{#                        <li class="nav-item active">#}
+{#                            <a class="nav-link" href="#">Disable<span class="sr-only">(current)</span></a>#}
+{#                        </li>#}
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_bfs_algorithm_create') }}">BFS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_dfs_algorithm_create') }}">DFS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_dijkstra_algorithm_create') }}">Dijkstra</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_kruskal_algorithm_create') }}">Kruskal</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_prim_algorithm_create') }}">Prim</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_topological_sorting_create') }}">Topological Sorting</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_bellman_ford_create') }}">Bellman Ford</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_floyd_warshall_create') }}">Floyd Warshall</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_johnson_create') }}">Johnson</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_fleury_create') }}">Fleury</a>
+                            </li>
+                        {% endif %}
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_login') }}">Sign in</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{ path('app_register') }}">Sign up !</a>
+                            </li>
+                        {% endif %}
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link disabled" href="#">Disabled</a>#}
+{#                        </li>#}
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+
+        <div id="under_header">
+
+        </div>
+
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div class="alert alert-{{ label }}" role="alert">
@@ -91,17 +137,19 @@
         {% block body %}
 
         {% endblock %}
+        <div id="footer">
+            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+                <p class="col-md-4 mb-0 text-muted">© 2024 Bartosz Lauks</p>
 
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <p class="col-md-4 mb-0 text-muted">© 2024 Bartosz Lauks</p>
-
-            <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-            </ul>
-        </footer>
+                <ul class="nav col-md-4 justify-content-end">
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+                </ul>
+            </footer>
+        </div>
+    </div>
     </body>
 </html>
