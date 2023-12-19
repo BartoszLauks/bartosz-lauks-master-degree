@@ -6,7 +6,7 @@ import sys
 try:
     from userKruskal import kruskal
 except Exception as e:
-    print(sys.argv[1], "ERROR IMPORT")
+    print(sys.argv[1], 'ERROR IMPORT')
     sys.exit()
 
 
@@ -80,7 +80,7 @@ if __name__ == '__main__':
     print(sys.argv[1], 'START MAIN TEST')
     print('BRUTE FORCE TEST UNIT')
     for testNumber in range(1, 21):
-        print("CASE :", testNumber)
+        print('CASE :', testNumber)
         graph = generate_random_graph(testNumber * 2, testNumber * 10)
         print(graph.edges)
         originResult = kruskal_origin(graph)

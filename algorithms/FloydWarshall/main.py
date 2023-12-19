@@ -6,7 +6,7 @@ import sys
 try:
     from userFloydWarshall import floyd_warshall
 except Exception as e:
-    print(sys.argv[1], "ERROR IMPORT")
+    print(sys.argv[1], 'ERROR IMPORT')
     sys.exit()
 
 
@@ -72,7 +72,7 @@ if __name__ == '__main__':
     print(sys.argv[1], 'START MAIN TEST')
     print('BRUTE FORCE TEST UNIT')
     for testNumber in range(1, 41):
-        print("CASE :", testNumber)
+        print('CASE :', testNumber)
         graph = generate_random_graph(2 * testNumber, testNumber * 2 * -1, testNumber * 2)
         print(graph.graph)
         originResult = floyd_warshall_origin(graph, list(graph.graph.keys())[0])

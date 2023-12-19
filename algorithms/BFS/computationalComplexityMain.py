@@ -3,7 +3,7 @@ import signal
 import sys
 import tracemalloc
 
-from UserBFS import bfs
+from userBFS import bfs
 
 
 def time_exceeded(signo, frame):
@@ -117,12 +117,11 @@ if __name__ == '__main__':
     graph = Graph()
     tracemalloc.start()
     bfs(graph, 0)
-    peekTracedMemory = int(tracemalloc.get_traced_memory()[1]))
+    peekTracedMemory = int(tracemalloc.get_traced_memory()[1])
     tracemalloc.stop()
 
     print(sys.argv[1], 'PEEK MEMORY USAGE BY YOUR IMPLEMENTATION:', peekTracedMemory)
     if peekTracedMemory < (PEEK_MEMORY * 2):
         print(sys.argv[1], 'FINISH COMPUTATIONAL COMPLEXITY TEST')
     else:
-        print(sys.argv[1], 'ERROR')
-        print('MEMORY LIMIT EXCEEDED')
+        print(sys.argv[1], 'ERROR MEMORY LIMIT EXCEEDED')

@@ -6,7 +6,7 @@ import sys
 try:
     from userBellmanFord import bellman_ford
 except Exception as e:
-    print(sys.argv[1], "ERROR IMPORT")
+    print(sys.argv[1], 'ERROR IMPORT')
     sys.exit()
 
 
@@ -73,7 +73,7 @@ if __name__ == '__main__':
     print(sys.argv[1], 'START MAIN TEST')
     print('BRUTE FORCE TEST UNIT')
     for testNumber in range(1, 21):
-        print("CASE :", testNumber)
+        print('CASE :', testNumber)
         graph = generate_random_graph(5 * testNumber, testNumber * 5, testNumber * 5)
         #print(graph.graph)
         originResult = bellman_ford_origin(graph, list(graph.graph.keys())[0])

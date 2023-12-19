@@ -5,9 +5,9 @@ import sys
 from collections import deque
 
 try:
-    from UserBFS import bfs
+    from userBFS import bfs
 except Exception as e:
-    print(sys.argv[1], "ERROR IMPORT")
+    print(sys.argv[1], 'ERROR IMPORT')
     sys.exit()
 
 
@@ -46,12 +46,12 @@ def bfs_origin(graph: Graph, start: int) -> []:
     return visited
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     set_max_runtime(2)
     print(sys.argv[1], 'START MAIN TEST')
     print('BRUTE FORCE TEST UNIT')
     for testNumber in range(1, 101):
-        print("CASE :", testNumber)
+        print('CASE :', testNumber)
         graphLenNode = testNumber * 10
         graph = Graph()
 
@@ -68,6 +68,6 @@ if __name__ == "__main__":
                 print(sys.argv[1], 'ERROR ALGORITHM RESULT')
                 sys.exit()
         except Exception as e:
-            print(sys.argv[1], "ERROR USER IMPLEMENTATION", e)
+            print(sys.argv[1], 'ERROR USER IMPLEMENTATION', e)
             sys.exit()
     print(sys.argv[1], 'FINISH MAIN TEST')

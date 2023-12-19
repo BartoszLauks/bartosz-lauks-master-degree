@@ -37,5 +37,4 @@ if __name__ == '__main__':
     if peekTracedMemory < (PEEK_MEMORY * 2):
         print(sys.argv[1], 'FINISH COMPUTATIONAL COMPLEXITY TEST')
     else:
-        print(sys.argv[1], 'ERROR')
-        print('MEMORY LIMIT EXCEEDED')
+        pprint(sys.argv[1], 'ERROR MEMORY LIMIT EXCEEDED')

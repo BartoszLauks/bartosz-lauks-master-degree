@@ -7,7 +7,7 @@ import sys
 try:
     from userPrim import prim
 except Exception as e:
-    print(sys.argv[1], "ERROR IMPORT")
+    print(sys.argv[1], 'ERROR IMPORT')
     sys.exit()
 
 
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     print(sys.argv[1], 'START MAIN TEST')
     print('BRUTE FORCE TEST UNIT')
     for testNumber in range(1, 101):
-        print("CASE :", testNumber)
+        print('CASE :', testNumber)
         graph = generate_random_graph(2 * testNumber, testNumber * 10)
         #print(graph.graph)
         originResult = prim_original(graph, list(graph.graph.keys())[0])
