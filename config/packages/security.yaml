@@ -37,8 +37,17 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/bellman_ford, roles: ROLE_USER }
          - { path: ^/bfs, roles: ROLE_USER }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/dfs, roles: ROLE_USER }
+         - { path: ^/dijkstra, roles: ROLE_USER }
+         - { path: ^/fleury, roles: ROLE_USER }
+         - { path: ^/floyd_warshall, roles: ROLE_USER }
+         - { path: ^/johnson, roles: ROLE_USER }
+         - { path: ^/kruskal, roles: ROLE_USER }
+         - { path: ^/prim, roles: ROLE_USER }
+         - { path: ^/topological_sorting, roles: ROLE_USER }
 
 when@test:
     security:
