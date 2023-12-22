@@ -13,24 +13,29 @@
                 html,
                 body {
                     font-family: 'Roboto', sans-serif;
-                    margin: 0;
-                    padding: 0;
-                    min-height: 100vh;
-                    display: flex;
-                    flex-direction: column;
+                    margin:0;
+                    padding:0;
+                    height:100%;
                 }
-                /*main {*/
-                /*    flex: 1;*/
-                /*}*/
                 #container {
                     min-height:100%;
                     position:relative;
                 }
                 #header {
-                    background-image: linear-gradient(to bottom right, #7BA4A8, #618285);
+                    background-image: linear-gradient(to bottom right, #ffb534, #ab7924);
                     position: fixed;
                     right: 0;
                     left: 0;
+                }
+                #under_header {
+                    height: 56px;
+                    position: static;
+                    width: 100%;
+                }
+                #body {
+                    padding: 10px;
+                    background-color: white;
+                    color: black;
                 }
                 #footer {
                     position: fixed;
@@ -39,10 +44,130 @@
                     width: 100%;
                     text-align: center;
                 }
-                #under_header {
-                    height: 56px;
+                #under_footer {
+                    height: 240px;
+                    bottom: 0;
+                }
+                #mid-container {
+                    text-align: center;
+                    margin-left: auto;
+                    margin-right: auto;
+                    padding: 15px;
+                    width: 500px;
+                    border: 15px outset #e1b126;
+                }
+                .btn-primary {
+                    transition-duration: 0.4s;
+                    background: #9f9d9d;
+                    border: black;
+                    color: white;
+                }
+                .btn-primary:hover {
+                    background-color: #8c8c8c;
+                    color: black;
+                }
+                .alert {
                     position: static;
-                    width: 100%;
+                }
+                .bg-primary {
+                    background-image: linear-gradient(to bottom right, rgb(134, 134, 134) , rgb(134, 134, 134));
+                }
+                .navbar-light .navbar-brand {
+                    color: white;
+                }
+                .navbar-light .navbar-nav .nav-link {
+                    color: white;
+                }
+                #advertising {
+                    left: 0;
+                    right: 0;
+                    background-color: #d5d5d5;
+                    height: 200px;
+                    text-align: center;
+                    margin-bottom: 10px;
+                }
+                .news
+                {
+                    background-color: #d5d5d5;
+                }
+                .news-bar
+                {
+                    text-align: center;
+                    padding-top: 10px;
+                    background-color: #d5d5d5;
+
+                }
+                .component-bar-ul
+                {
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+                    overflow: hidden;
+                }
+                .component-bar-li
+                {
+                    float: left;
+                }
+                a:hover, a:visited, a:link, a:active {
+                    text-decoration: none;
+                }
+                .show-car
+                {
+                    left: 0;
+                    width: 500px;
+                    text-align: center;
+                }
+                .show-car-info
+                {
+                    text-align: center;
+                    width: 500px;
+                }
+
+                .center-bar
+                {
+                    text-align: center;
+                    padding: 15px;
+                    background-color: #7BA4A8;
+                }
+                .center-bar-warning
+                {
+                    text-align: center;
+                    padding: 15px;
+                    background-image: linear-gradient(to bottom right, rgb(225, 177, 38), rgb(162, 129, 24));;
+                }
+                .center-bar-post
+                {
+                    text-align: center;
+                    padding: 15px;
+                    background-color: #7BA4A8;
+                    margin-top: 15px;
+                    margin-bottom: 15px;
+                }
+                .center-bar-comment
+                {
+                    text-align: center;
+                    padding: 15px;
+                    background-color: #7BA4A8;
+                    margin-bottom: 15px;
+                }
+                .center > img
+                {
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+                .card
+                {
+                    position: static;
+                }
+                .center-dedication
+                {
+                    margin: auto;
+                    width: 50%;
+                    border: 15px outset #e1b126;
+                    padding: 10px;
+                    text-align: center;
+                    font-family: 'Great Vibes', cursive;
                 }
             </style>
         {% endblock %}
@@ -56,13 +181,13 @@
     <body>
     <div id="container">
         <div id="header">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand" href="{{ path('app_home') }}">Home</a>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <ul class="navbar-nav mr-auto">
 {#                        <li class="nav-item active">#}
 {#                            <a class="nav-link" href="#">Disable<span class="sr-only">(current)</span></a>#}
 {#                        </li>#}
@@ -115,13 +240,10 @@
                                 <a class="nav-link" href="{{ path('app_register') }}">Sign up !</a>
                             </li>
                         {% endif %}
-{#                        <li class="nav-item">#}
-{#                            <a class="nav-link disabled" href="#">Disabled</a>#}
-{#                        </li>#}
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        <button class="btn btn-primary" type="submit">Search</button>
                     </form>
                 </div>
             </nav>
@@ -131,28 +253,59 @@
 
         </div>
 
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert alert-{{ label }}" role="alert">
-                    {{ message }}
-                </div>
+        <div id="body">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
 
-        {% block body %}
+            {% block body %}
 
-        {% endblock %}
+            {% endblock %}
+        </div>
+        <div id="under_footer">
+
+        </div>
         <div id="footer">
-            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-                <p class="col-md-4 mb-0 text-muted">© 2024 Bartosz Lauks</p>
+            <footer class="bg-primary text-white text-center text-lg-start">
+                <div class="container p-4">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Master degree</h5>
 
-                <ul class="nav col-md-4 justify-content-end">
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-                </ul>
+                            <p>
+                                Wdrożenie i adaptacja platformy testowej przeznaczonej do testowania algorytmów grafowych
+                            </p>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Links</h5>
+
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="https://www.wozna.org/" target="_blank" class="text-white">Promotor</a>
+                                </li>
+                                <li>
+                                    <a href="https://www.ujd.edu.pl/" target="_blank" class="text-white">Uczelnia</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.wnspt.ujd.edu.pl/" target="_blank" class="text-white">Wydział</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('app_dedication') }}" class="text-white">Dedykacja</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                    © 2024 Author:
+                    <a class="text-white" href="https://mdbootstrap.com/">Bartosz Lauks</a>
+                </div>
             </footer>
         </div>
     </div>
