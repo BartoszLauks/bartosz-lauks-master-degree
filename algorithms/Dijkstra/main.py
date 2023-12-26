@@ -7,7 +7,7 @@ import sys
 try:
     from userDijkstra import dijkstra
 except Exception as e:
-    print(sys.argv[1], "ERROR IMPORT")
+    print(sys.argv[1], 'ERROR IMPORT')
     sys.exit()
 
 
@@ -81,7 +81,7 @@ if __name__ == '__main__':
     print(sys.argv[1], 'START MAIN TEST')
     print('BRUTE FORCE TEST UNIT')
     for testNumber in range(1, 31):
-        print("CASE :", testNumber)
+        print('CASE :', testNumber)
         graph = generate_random_graph(2 * testNumber, testNumber)
 
         start_vertex = random.randint(0, 100 * testNumber - 1)

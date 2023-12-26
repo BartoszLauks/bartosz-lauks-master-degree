@@ -6,7 +6,7 @@ import sys
 try:
     from userTopologicalSorting import topological_sort
 except Exception as e:
-    print(sys.argv[1], "ERROR IMPORT")
+    print(sys.argv[1], 'ERROR IMPORT')
     sys.exit()
 
 
