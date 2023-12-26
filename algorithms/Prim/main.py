@@ -7,7 +7,7 @@ import sys
 try:
     from userPrim import prim
 except Exception as e:
-    print(sys.argv[1], 'ERROR IMPORT')
+    print(sys.argv[1], "ERROR IMPORT")
     sys.exit()
 
 
@@ -26,14 +26,14 @@ class Graph:
     def __init__(self):
         self.graph = {}
 
-    def add_edge(self, u, v, weight):
-        if u not in self.graph:
-            self.graph[u] = []
-        if v not in self.graph:
-            self.graph[v] = []
+    def add_edge(self, source, destination, weight):
+        if source not in self.graph:
+            self.graph[source] = []
+        if destination not in self.graph:
+            self.graph[destination] = []
 
-        self.graph[u].append((v, weight))
-        self.graph[v].append((u, weight))
+        self.graph[source].append((destination, weight))
+        self.graph[destination].append((source, weight))
 
 
 def prim_original(graph: Graph, start_vertex) -> []:
@@ -81,9 +81,9 @@ if __name__ == '__main__':
     print(sys.argv[1], 'START MAIN TEST')
     print('BRUTE FORCE TEST UNIT')
     for testNumber in range(1, 101):
-        print('CASE :', testNumber)
+        print("CASE :", testNumber)
         graph = generate_random_graph(2 * testNumber, testNumber * 10)
-        #print(graph.graph)
+        print(graph.graph)
         originResult = prim_original(graph, list(graph.graph.keys())[0])
         try:
             userResult = prim(graph, list(graph.graph.keys())[0])

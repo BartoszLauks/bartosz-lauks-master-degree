@@ -19,7 +19,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
 
-#[Route('/floyd_warshall', name: 'app_floyd_warshall_')]
+#[Route('/floyd_warshall', name: 'app_floyd_warshall_algorithm_')]
 class FloydWarshallController extends AbstractController
 {
     public function __construct(
@@ -31,12 +31,10 @@ class FloydWarshallController extends AbstractController
     ) {
     }
 
-    #[Route('/floyd/warshall', name: 'app_floyd_warshall')]
+    #[Route('/', name: 'index')]
     public function index(): Response
     {
-        return $this->render('floyd_warshall/index.html.twig', [
-            'controller_name' => 'FloydWarshallController',
-        ]);
+        return $this->render('floyd_warshall/index.html.twig');
     }
 
     #[Route('/create', name: 'create')]

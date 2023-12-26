@@ -3,6 +3,85 @@
     Create test implementation DFS Algorithm
 {% endblock %}
 
+{% block javascripts %}
+    <script>
+        function copyText() {
+            // You may need to modify the file path based on your setup
+            var filePath = 'clipboard.txt';
+
+            // Use XMLHttpRequest to read the file content
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var textToCopy = xhr.responseText;
+
+                    // Create a temporary textarea to hold the text
+                    var textarea = document.createElement('textarea');
+                    textarea.value = textToCopy;
+                    document.body.appendChild(textarea);
+
+                    // Select and copy the text
+                    textarea.select();
+                    document.execCommand('copy');
+
+                    // Remove the temporary textarea
+                    document.body.removeChild(textarea);
+
+                    alert('Text copied to clipboard!');
+                }
+            };
+            xhr.open('GET', filePath, true);
+            xhr.send();
+        }
+    </script>
+{% endblock %}
+
 {% block body %}
-    {{ form(form) }}
+    <div id="mid-container">
+        <h3>Task</h3>
+        <p>Implement the <b>DFS</b> algorithm based on the code below:</p>
+        <pre class="code-block">
+            <code class="fa-python">
+
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, u, v):
+        if u not in self.graph:
+            self.graph[u] = []
+        self.graph[u].append(v)
+
+
+def dfs(graph: Graph, start: int, visited=None) -> []:
+# Your algorithm implementation
+
+
+if __name__ == '__main__':
+    graph = Graph()
+    graph.add_edge(0, 1)
+    graph.add_edge(0, 2)
+    graph.add_edge(1, 2)
+    graph.add_edge(2, 0)
+    graph.add_edge(2, 3)
+    graph.add_edge(3, 3)
+
+    print(graph.graph)
+    print("DFS starting from vertex 2:")
+    print(dfs(graph, 2))
+    # Result for this main:
+    # {0: [1, 2], 1: [2], 2: [0, 3], 3: [3]}
+    # DFS starting from vertex 2:
+    # [2, 0, 1, 3]
+            </code>
+        </pre>
+        <h6>Copy Code to Clipboard</h6>
+        <button class="btn-primary btn" onclick="copyText()">Copy Text</button>
+    </div>
+    <hr>
+    <div id="mid-container">
+        <h2>Testing</h2>
+        <h5>Upload a file with your algorithm implementation</h5>
+        {{ form(form) }}
+    </div>
 {% endblock %}

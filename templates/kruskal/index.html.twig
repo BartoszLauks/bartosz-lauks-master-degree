@@ -1,20 +1,45 @@
-<!DOCTYPE html>
+{% extends 'Header.html.twig' %}
 
-<title>Hello KruskalController!</title>
+{% block title %}
+    Kruskal Algorithm
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Algorytm Kruskala</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <p>Algorytm Kruskala to algorytm grafowy używany do znajdowania minimalnego drzewa rozpinającego w spójnym, ważonym grafie nieskierowanym. Minimalne drzewo rozpinające to drzewo o minimalnej sumie wag krawędzi, które łączą wszystkie wierzchołki grafu, bez cykli.</p>
+    <ol>
+        <li>
+            <strong>Sortowanie krawędzi:</strong>
+            <p>Posortuj wszystkie krawędzie grafu według ich wag, rosnąco.</p>
+        </li>
+        <li>
+            <strong>Inicjalizacja drzewa rozpinającego:</strong>
+            <p>Stwórz zbiór drzewa rozpinającego, zaczynając od pojedynczych wierzchołków.</p>
+        </li>
+        <li>
+            <strong>Przejście przez posortowane krawędzie:</strong>
+            <ol type="a">
+                <li>
+                    <strong>Sprawdzenie cyklu:</strong>
+                    <p>Sprawdź, czy dodanie aktualnej krawędzi nie spowoduje powstania cyklu w drzewie rozpinającym. Możesz to zrobić, porównując, czy oba końce krawędzi należą do różnych zbiorów (drzew) w strukturze zbioru rozłącznego (np. za pomocą algorytmu Union-Find).</p>
+                </li>
+                <li>
+                    <strong>Dodanie do drzewa rozpinającego:</strong>
+                    <p>Jeśli dodanie krawędzi nie spowoduje cyklu, dodaj ją do drzewa rozpinającego.</p>
+                </li>
+            </ol>
+        </li>
+        <li>
+            <strong>Powtarzanie kroków:</strong>
+            <p>Powtarzaj kroki 3a i 3b, aż wszystkie wierzchołki zostaną połączone i drzewo rozpinające będzie gotowe.</p>
+        </li>
+    </ol>
+    <p>Algorytm ten działa na zasadzie "żadnego cyklu" - stopniowo dodaje najmniejsze krawędzie, sprawdzając jednocześnie, czy nie tworzą one cykli. Algorytm ten jest egoistyczny w sensie, że zawsze wybiera najmniejszą krawędź, nie zawsze dbając o globalne optymalne rozwiązanie. Jednak w kontekście minimalnego drzewa rozpinającego, algorytm Kruskala zawsze znajduje optymalne rozwiązanie.</p>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/app/src/Controller/KruskalController.php'|file_link(0) }}">src/Controller/KruskalController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/app/templates/kruskal/index.html.twig'|file_link(0) }}">templates/kruskal/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div id="mid-container">
+        <a href="{{ path('app_kruskal_algorithm_create') }}">
+            <button class="btn btn-primary">Task</button>
+        </a>
+    </div>
 {% endblock %}

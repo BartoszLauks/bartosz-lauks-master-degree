@@ -26,10 +26,10 @@ class Graph:
     def __init__(self):
         self.graph = {}
 
-    def add_edge(self, u, v, weight):
-        if u not in self.graph:
-            self.graph[u] = []
-        self.graph[u].append((v, weight))
+    def add_edge(self, source, destination, weight):
+        if source not in self.graph:
+            self.graph[source] = []
+        self.graph[source].append((destination, weight))
 
 
 def remove_inf_origin(dict):

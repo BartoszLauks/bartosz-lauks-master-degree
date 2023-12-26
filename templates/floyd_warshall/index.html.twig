@@ -1,20 +1,31 @@
-<!DOCTYPE html>
+{% extends 'Header.html.twig' %}
 
-<title>Hello FloydWarshallController!</title>
+{% block title %}
+    Floyd Warshall Algorithm
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Floyd-Warshall Algorithm</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <p>Algorytm Floyd-Warshall to algorytm służący do znajdowania najkrótszych ścieżek między wszystkimi parami w grafie ważonym skierowanym lub nieskierowanym, nawet z możliwością występowania ujemnych wag krawędzi. Algorytm ten został nazwany na cześć jego twórców, Roberta W. Floyda i Stephena Warshalla.</p>
+    <ol>
+        <li><strong>Inicjalizacja macierzy odległości:</strong>
+            Dla każdej pary wierzchołków (i, j) ustaw odległość między nimi jako wagę krawędzi, jeśli istnieje krawędź między nimi, a jeśli nie, ustaw odległość jako nieskończoność. Ponadto, ustaw odległość między każdym wierzchołkiem a samym sobą na zero.
+            D[i][j] = waga krawędzi od i do j, jeśli istnieje, nieskończoność w przeciwnym razie
+            D[i][i] = 0</li>
+        <li><strong>Aktualizacja odległości:</strong>
+            Dla każdej pary wierzchołków (i, j) i każdego wierzchołka pośredniego k (od 1 do liczby wierzchołków), sprawdź, czy trasa od i do j poprzez wierzchołek k jest krótsza niż obecna znana trasa od i do j. Jeśli tak, zaktualizuj odległość.
+            D[i][j] = min(D[i][j], D[i][k] + D[k][j])</li>
+        <li><strong>Iteracje:</strong>
+            Powtórz krok 2 dla wszystkich możliwych kombinacji wierzchołków (i, j) i wierzchołków pośrednich k.</li>
+        <li><strong>Zwrócenie wyników:</strong>
+            Po zakończeniu iteracji, macierz odległości zawiera najkrótsze odległości między wszystkimi parami wierzchołków.</li>
+    </ol>
+    <p>Algorytm ten działa dla grafów skierowanych i nieskierowanych, zarówno dla grafów ważonych, jak i nieważonych, ale jest szczególnie przydatny w przypadku grafów ważonych z ujemnymi wagami krawędzi. Jego złożoność czasowa wynosi O(V^3), gdzie V to liczba wierzchołków w grafie.</p>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/app/src/Controller/FloydWarshallController.php'|file_link(0) }}">src/Controller/FloydWarshallController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/app/templates/floyd_warshall/index.html.twig'|file_link(0) }}">templates/floyd_warshall/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div id="mid-container">
+        <a href="{{ path('app_floyd_warshall_algorithm_create') }}">
+            <button class="btn btn-primary">Task</button>
+        </a>
+    </div>
 {% endblock %}

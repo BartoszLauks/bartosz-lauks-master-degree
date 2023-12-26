@@ -19,7 +19,7 @@ def set_max_runtime(seconds):
 
 class Graph:
     def __init__(self):
-        self.vertices = {
+        self.graph = {
             0: [(1, 13), (2, 9), (3, 15), (4, 20), (5, 19), (6, 6), (7, 4), (8, 5), (9, 10), (10, 17), (11, 14),
                 (12, 16), (13, 11), (14, 15), (15, 17), (16, 14), (17, 1), (18, 16), (19, 20), (20, 17), (21, 17),
                 (22, 17), (23, 11), (24, 7), (25, 9), (26, 10), (27, 17), (28, 12), (29, 14), (30, 6), (31, 16),
@@ -183,7 +183,7 @@ class Graph:
 
 
 if __name__ == '__main__':
-    set_max_runtime(2)
+    set_max_runtime(3)
     print(sys.argv[1], 'START COMPUTATIONAL COMPLEXITY TEST')
     PEEK_MEMORY = 6496
     graph = Graph()

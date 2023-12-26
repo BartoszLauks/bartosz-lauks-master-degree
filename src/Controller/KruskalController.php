@@ -30,12 +30,10 @@ class KruskalController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'app_kruskal')]
+    #[Route('/', name: 'index')]
     public function index(): Response
     {
-        return $this->render('kruskal/index.html.twig', [
-            'controller_name' => 'KruskalController',
-        ]);
+        return $this->render('kruskal/index.html.twig');
     }
 
     #[Route('/create', name: 'create')]

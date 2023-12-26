@@ -1,20 +1,59 @@
-<!DOCTYPE html>
+{% extends 'Header.html.twig' %}
 
-<title>Hello JohnsonController!</title>
+{% block title %}
+    Johnson Algorithm
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Algorytm Johnsona</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <p>Algorytm Johnsona to algorytm optymalizacyjny, który jest używany do rozwiązania problemu szeregowania zadań w systemie z pojedynczym operatorem (Single Machine Scheduling Problem). Celem jest minimalizacja całkowitego czasu trwania wszystkich zadań.</p>
+    <ol>
+        <li>
+            <strong>Przygotowanie danych:</strong>
+            <p>Zbierz informacje o czasach trwania poszczególnych zadań na maszynie.</p>
+        </li>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/app/src/Controller/JohnsonController.php'|file_link(0) }}">src/Controller/JohnsonController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/app/templates/johnson/index.html.twig'|file_link(0) }}">templates/johnson/index.html.twig</a></code></li>
-    </ul>
-</div>
+        <li>
+            <strong>Dodanie sztucznych operacji:</strong>
+            <p>
+                Dla każdego zadania, utwórz dwie sztuczne operacje (fikcyjne zadania) - jedną na początku i jedną na końcu.
+                Dla zadania i-tego, pierwsza sztuczna operacja jest oznaczona jako <em>i<sub>1</sub></em>, a druga jako <em>i<sub>2</sub></em>.
+            </p>
+        </li>
+
+        <li>
+            <strong>Przypisanie czasów trwania sztucznych operacji:</strong>
+            <p>
+                Czas trwania dla pierwszej sztucznej operacji <em>i<sub>1</sub></em> to czas trwania operacji i na maszynie, na której operacja i jest najkrótsza.
+                Czas trwania dla drugiej sztucznej operacji <em>i<sub>2</sub></em> to czas trwania operacji i na maszynie, na której operacja i jest najdłuższa.
+            </p>
+        </li>
+
+        <li>
+            <strong>Sortowanie zadań:</strong>
+            <p>Posortuj wszystkie sztuczne operacje według czasu trwania, rosnąco.</p>
+        </li>
+
+        <li>
+            <strong>Wykonywanie operacji:</strong>
+            <p>
+                Przechodź przez posortowane sztuczne operacje.
+                Jeśli operacja <em>i<sub>k</sub></em> jest spotykana, wykonaj rzeczywiste zadanie i.
+            </p>
+        </li>
+
+        <li>
+            <strong>Usuwanie sztucznych operacji:</strong>
+            <p>Usuń wszystkie sztuczne operacje z wynikowego planu.</p>
+        </li>
+    </ol>
+
+    <p>Algorytm Johnsona jest szczególnie skuteczny dla problemów szeregowania zadań na pojedynczej maszynie, gdzie czas trwania zadań może być różny na różnych maszynach. Algorytm ten minimalizuje całkowity czas przepływu zadań przez system, co jest istotne w przypadku efektywnego zarządzania czasem i zasobami.</p>
+
+    <div id="mid-container">
+        <a href="{{ path('app_johnson_algorithm_create') }}">
+            <button class="btn btn-primary">Task</button>
+        </a>
+    </div>
 {% endblock %}

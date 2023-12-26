@@ -36,7 +36,7 @@ def bellman_ford_origin(graph: Graph, start_vertex: int) -> {}:
     distances = {vertex: float('infinity') for vertex in graph.graph}
     distances[start_vertex] = 0
 
-    # Step 2: Relax edges repeatedly
+    # Step 2: Relax graph repeatedly
     for _ in range(len(graph.graph) - 1):
         for current_vertex in graph.graph:
             if current_vertex in distances:

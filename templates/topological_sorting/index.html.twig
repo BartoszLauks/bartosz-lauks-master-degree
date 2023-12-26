@@ -1,20 +1,26 @@
-<!DOCTYPE html>
+{% extends 'Header.html.twig' %}
 
-<title>Hello TopologicalSortingController!</title>
+{% block title %}
+    Topological Sorting Algorithm
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Algorytm Sortowania Topologicznego</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <p>Topological Sorting is a way to order the vertices in a directed acyclic graph (DAG) such that for every directed edge (u, v), vertex u comes before vertex v in the topological order.</p>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/app/src/Controller/TopologicalSortingController.php'|file_link(0) }}">src/Controller/TopologicalSortingController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/app/templates/topological_sorting/index.html.twig'|file_link(0) }}">templates/topological_sorting/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <ol>
+        <li><strong>Inicjalizacja:</strong> Znajdź wszystkie wierzchołki bez wejściowych krawędzi.</li>
+        <li><strong>Wybór wierzchołka:</strong> Wybierz wierzchołek z punktu 1 i dodaj go do listy porządkowej. Usuń krawędzie wychodzące z tego wierzchołka.</li>
+        <li><strong>Aktualizacja stopni wejściowych:</strong> Po usunięciu krawędzi z wierzchołka, zaktualizuj stopnie wejściowe dla jego sąsiadów.</li>
+        <li><strong>Powtórz:</strong> Powtarzaj kroki 2 i 3, aż wszystkie wierzchołki zostaną dodane do listy porządkowej.</li>
+    </ol>
+
+    <p>Jeśli żaden wierzchołek nie został dodany do listy porządkowej, to oznacza, że graf zawiera cykl, a porządek topologiczny nie jest możliwy.</p>
+
+    <div id="mid-container">
+        <a href="{{ path('app_topological_sorting_algorithm_create') }}">
+            <button class="btn btn-primary">Task</button>
+        </a>
+    </div>
 {% endblock %}

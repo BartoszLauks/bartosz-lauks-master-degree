@@ -7,7 +7,7 @@ import sys
 try:
     from userDijkstra import dijkstra
 except Exception as e:
-    print(sys.argv[1], 'ERROR IMPORT')
+    print(sys.argv[1], "ERROR IMPORT")
     sys.exit()
 
 
@@ -24,24 +24,24 @@ def set_max_runtime(seconds):
 
 class Graph:
     def __init__(self):
-        self.vertices = {}
+        self.graph = {}
 
     def add_vertex(self, vertex):
-        if vertex not in self.vertices:
-            self.vertices[vertex] = []
+        if vertex not in self.graph:
+            self.graph[vertex] = []
 
     def add_edge(self, source, destination, weight):
         self.add_vertex(source)
         self.add_vertex(destination)
-        self.vertices[source].append((destination, weight))
-        self.vertices[destination].append((source, weight))
+        self.graph[source].append((destination, weight))
+        self.graph[destination].append((source, weight))
 
 
 def dijkstra_origin(graph: Graph, start):
     min_heap = [(0, start)]
     visited = set()
 
-    distances = {vertex: float('infinity') for vertex in graph.vertices}
+    distances = {vertex: float('infinity') for vertex in graph.graph}
     distances[start] = 0
 
     while min_heap:
@@ -52,7 +52,7 @@ def dijkstra_origin(graph: Graph, start):
 
         visited.add(current_vertex)
 
-        for neighbor, weight in graph.vertices[current_vertex]:
+        for neighbor, weight in graph.graph[current_vertex]:
             distance = current_distance + weight
 
             if distance < distances[neighbor]:
@@ -81,11 +81,11 @@ if __name__ == '__main__':
     print(sys.argv[1], 'START MAIN TEST')
     print('BRUTE FORCE TEST UNIT')
     for testNumber in range(1, 31):
-        print('CASE :', testNumber)
+        print("CASE :", testNumber)
         graph = generate_random_graph(2 * testNumber, testNumber)
 
         start_vertex = random.randint(0, 100 * testNumber - 1)
-        print(graph.vertices)
+        print(graph.graph)
         originResult = dijkstra_origin(graph, 0)
         try:
             userResult = dijkstra(graph, 0)

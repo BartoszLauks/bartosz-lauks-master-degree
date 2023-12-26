@@ -19,7 +19,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
 
-#[Route('/johnson', name: 'app_johnson_')]
+#[Route('/johnson', name: 'app_johnson_algorithm_')]
 class JohnsonController extends AbstractController
 {
     public function __construct(
@@ -30,12 +30,10 @@ class JohnsonController extends AbstractController
         private readonly RandomStringGenerator $stringGenerator
     ) {
     }
-    #[Route('/', name: 'app_johnson')]
+    #[Route('', name: 'index')]
     public function index(): Response
     {
-        return $this->render('johnson/index.html.twig', [
-            'controller_name' => 'JohnsonController',
-        ]);
+        return $this->render('johnson/index.html.twig');
     }
 
     #[Route('/create', name: 'create')]

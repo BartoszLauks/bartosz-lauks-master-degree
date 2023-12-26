@@ -30,12 +30,10 @@ class PrimController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'app_prim')]
+    #[Route('/', name: 'index')]
     public function index(): Response
     {
-        return $this->render('prim/index.html.twig', [
-            'controller_name' => 'PrimController',
-        ]);
+        return $this->render('prim/index.html.twig');
     }
 
     #[Route('/create', name: 'create')]

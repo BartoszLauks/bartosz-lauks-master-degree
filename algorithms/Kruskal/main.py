@@ -6,7 +6,7 @@ import sys
 try:
     from userKruskal import kruskal
 except Exception as e:
-    print(sys.argv[1], 'ERROR IMPORT')
+    print(sys.argv[1], "ERROR IMPORT")
     sys.exit()
 
 
@@ -23,21 +23,21 @@ def set_max_runtime(seconds):
 
 class Graph:
     def __init__(self):
-        self.edges = []
+        self.graph = []
 
-    def add_edge(self, u, v, w):
-        self.edges.append((u, v, w))
+    def add_edge(self, source, destination, weight):
+        self.graph.append((source, destination, weight))
 
 
 def kruskal_origin(graph: Graph):
     all_vertices = set()
-    for edge in graph.edges:
+    for edge in graph.graph:
         all_vertices.add(edge[0])
         all_vertices.add(edge[1])
 
     num_vertices = len(all_vertices)
 
-    graph.edges = sorted(graph.edges, key=lambda x: x[2])
+    graph.graph = sorted(graph.graph, key=lambda x: x[2])
 
     parent = [i for i in range(num_vertices)]
 
@@ -55,7 +55,7 @@ def kruskal_origin(graph: Graph):
 
     min_spanning_tree = []
 
-    for edge in graph.edges:
+    for edge in graph.graph:
         u, v, w = edge
         if find_set(u) != find_set(v):
             min_spanning_tree.append((u, v, w))
@@ -80,9 +80,9 @@ if __name__ == '__main__':
     print(sys.argv[1], 'START MAIN TEST')
     print('BRUTE FORCE TEST UNIT')
     for testNumber in range(1, 21):
-        print('CASE :', testNumber)
+        print("CASE :", testNumber)
         graph = generate_random_graph(testNumber * 2, testNumber * 10)
-        print(graph.edges)
+        print(graph.graph)
         originResult = kruskal_origin(graph)
         try:
             userResult = kruskal(graph)

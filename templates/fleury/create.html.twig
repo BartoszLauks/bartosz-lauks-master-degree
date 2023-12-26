@@ -3,6 +3,81 @@
     Create test implementation Fleury Algorithm
 {% endblock %}
 
+{% block javascripts %}
+    <script>
+        function copyText() {
+            // You may need to modify the file path based on your setup
+            var filePath = 'clipboard.txt';
+
+            // Use XMLHttpRequest to read the file content
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var textToCopy = xhr.responseText;
+
+                    // Create a temporary textarea to hold the text
+                    var textarea = document.createElement('textarea');
+                    textarea.value = textToCopy;
+                    document.body.appendChild(textarea);
+
+                    // Select and copy the text
+                    textarea.select();
+                    document.execCommand('copy');
+
+                    // Remove the temporary textarea
+                    document.body.removeChild(textarea);
+
+                    alert('Text copied to clipboard!');
+                }
+            };
+            xhr.open('GET', filePath, true);
+            xhr.send();
+        }
+    </script>
+{% endblock %}
+
 {% block body %}
-    {{ form(form) }}
+    <div id="mid-container">
+        <h3>Task</h3>
+        <p>Implement the <b>Fleury</b> algorithm based on the code below:</p>
+        <pre class="code-block">
+            <code class="fa-python">
+
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, source, destination):
+        self.graph.setdefault(source, []).append(destination)
+        self.graph.setdefault(destination, []).append(source)
+
+def fleury(graph):
+# Your algorithm implementation
+# If there are any exceptions (Graph contains negative-weight cycle etc.), return an empty dictionary.
+
+if __name__ == "__main__":
+    g = Graph()
+    g.add_edge(0, 1)
+    g.add_edge(1, 2)
+    g.add_edge(2, 0)
+    g.add_edge(1, 3)
+    g.add_edge(3, 4)
+    g.add_edge(4, 1)
+
+    eulerian_circuit = fleury(g)
+    print("Eulerian Circuit:", eulerian_circuit)
+    # Result for this main:
+    # Eulerian Circuit: [(0, 1), (1, 2), (2, 0)]
+
+            </code>
+        </pre>
+        <h6>Copy Code to Clipboard</h6>
+        <button class="btn-primary btn" onclick="copyText()">Copy Text</button>
+    </div>
+    <hr>
+    <div id="mid-container">
+        <h2>Testing</h2>
+        <h5>Upload a file with your algorithm implementation</h5>
+        {{ form(form) }}
+    </div>
 {% endblock %}

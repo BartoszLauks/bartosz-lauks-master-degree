@@ -6,7 +6,7 @@ import sys
 try:
     from userTopologicalSorting import topological_sort
 except Exception as e:
-    print(sys.argv[1], 'ERROR IMPORT')
+    print(sys.argv[1], "ERROR IMPORT")
     sys.exit()
 
 
@@ -25,15 +25,15 @@ class Graph:
     def __init__(self):
         self.graph = {}
 
-    def add_edge(self, u, v):
-        if u not in self.graph:
-            self.graph[u] = []
-        self.graph[u].append(v)
-        if v not in self.graph:
-            self.graph[v] = []
+    def add_edge(self, source, destination):
+        if source not in self.graph:
+            self.graph[source] = []
+        self.graph[source].append(destination)
+        if destination not in self.graph:
+            self.graph[destination] = []
 
 
-def topological_sort_original(graph: Graph):
+def topological_sort_original(graph: Graph) -> []:
     def topological_sort_util(v, visited, stack):
         visited[v] = True
         for neighbor in graph.graph.get(v, []):
@@ -63,7 +63,7 @@ if __name__ == '__main__':
         for createGraph in range(1, graphLenNode):
             graph.add_edge(random.randint(0, 10 * testNumber), random.randint(0, 10 * testNumber))
 
-        #print(graph.graph)
+        print(graph.graph)
         originResult = topological_sort_original(graph)
         try:
             userResult = topological_sort(graph)

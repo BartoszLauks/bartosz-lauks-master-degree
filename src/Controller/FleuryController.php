@@ -18,7 +18,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
 
-#[Route('/fleury', name: 'app_fleury_')]
+#[Route('/fleury', name: 'app_fleury_algorithm_')]
 class FleuryController extends AbstractController
 {
     public function __construct(
@@ -30,12 +30,10 @@ class FleuryController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'app_fleury')]
+    #[Route('', name: 'index')]
     public function index(): Response
     {
-        return $this->render('fleury/index.html.twig', [
-            'controller_name' => 'FleuryController',
-        ]);
+        return $this->render('fleury/index.html.twig');
     }
 
     #[Route('/create', name: 'create')]
@@ -70,7 +68,7 @@ class FleuryController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('bellman_ford/create.html.twig', [
+        return $this->render('fleury/create.html.twig', [
             'form' => $form
         ]);
     }

@@ -19,7 +19,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
 
-#[Route('/bellman_ford', name: 'app_bellman_ford_')]
+#[Route('/bellman_ford', name: 'app_bellman_ford_algorithm_')]
 class BellmanFordController extends AbstractController
 {
     public function __construct(
@@ -31,12 +31,10 @@ class BellmanFordController extends AbstractController
     ) {
     }
 
-    #[Route('', name: 'app_bellman_ford')]
+    #[Route('', name: 'index')]
     public function index(): Response
     {
-        return $this->render('bellman_ford/index.html.twig', [
-            'controller_name' => 'BellmanFordController',
-        ]);
+        return $this->render('bellman_ford/index.html.twig');
     }
 
     #[Route('/create', name: 'create')]

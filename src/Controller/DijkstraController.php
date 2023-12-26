@@ -31,12 +31,10 @@ class DijkstraController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'app_dijkstra')]
+    #[Route('/', name: 'index')]
     public function index(): Response
     {
-        return $this->render('dijkstra/index.html.twig', [
-            'controller_name' => 'DijkstraController',
-        ]);
+        return $this->render('dijkstra/index.html.twig');
     }
 
     #[Route('/create', name: 'create')]

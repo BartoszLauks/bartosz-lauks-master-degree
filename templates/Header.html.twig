@@ -16,6 +16,7 @@
                     margin:0;
                     padding:0;
                     height:100%;
+                    background-color: #f8e9d0;
                 }
                 #container {
                     min-height:100%;
@@ -34,8 +35,9 @@
                 }
                 #body {
                     padding: 10px;
-                    background-color: white;
+                    background-color: #f8e9d0;
                     color: black;
+
                 }
                 #footer {
                     position: fixed;
@@ -45,16 +47,20 @@
                     text-align: center;
                 }
                 #under_footer {
-                    height: 240px;
+                    height: 232px;
                     bottom: 0;
                 }
                 #mid-container {
                     text-align: center;
                     margin-left: auto;
                     margin-right: auto;
+                    margin-bottom: 30px;
                     padding: 15px;
                     width: 500px;
                     border: 15px outset #e1b126;
+                }
+                #mid-container input{
+                    text-align: center;
                 }
                 .btn-primary {
                     transition-duration: 0.4s;
@@ -169,6 +175,11 @@
                     text-align: center;
                     font-family: 'Great Vibes', cursive;
                 }
+                .code-block {
+                    text-align: justify;
+                    background-color: #daccb5;
+                    padding-left: 10px;
+                }
             </style>
         {% endblock %}
 
@@ -193,34 +204,34 @@
 {#                        </li>#}
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_bfs_algorithm_create') }}">BFS</a>
+                                <a class="nav-link" href="{{ path('app_bfs_algorithm_index') }}">BFS</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_dfs_algorithm_create') }}">DFS</a>
+                                <a class="nav-link" href="{{ path('app_dfs_algorithm_index') }}">DFS</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_dijkstra_algorithm_create') }}">Dijkstra</a>
+                                <a class="nav-link" href="{{ path('app_dijkstra_algorithm_index') }}">Dijkstra</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_kruskal_algorithm_create') }}">Kruskal</a>
+                                <a class="nav-link" href="{{ path('app_kruskal_algorithm_index') }}">Kruskal</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_prim_algorithm_create') }}">Prim</a>
+                                <a class="nav-link" href="{{ path('app_prim_algorithm_index') }}">Prim</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_topological_sorting_create') }}">Topological Sorting</a>
+                                <a class="nav-link" href="{{ path('app_topological_sorting_algorithm_index') }}">Topological Sorting</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_bellman_ford_create') }}">Bellman Ford</a>
+                                <a class="nav-link" href="{{ path('app_bellman_ford_algorithm_index') }}">Bellman Ford</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_floyd_warshall_create') }}">Floyd Warshall</a>
+                                <a class="nav-link" href="{{ path('app_floyd_warshall_algorithm_index') }}">Floyd Warshall</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_johnson_create') }}">Johnson</a>
+                                <a class="nav-link" href="{{ path('app_johnson_algorithm_index') }}">Johnson</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_fleury_create') }}">Fleury</a>
+                                <a class="nav-link" href="{{ path('app_fleury_algorithm_index') }}">Fleury</a>
                             </li>
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN') %}

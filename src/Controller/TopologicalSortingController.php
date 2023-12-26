@@ -18,7 +18,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
 
-#[Route('/topological_sorting', name: 'app_topological_sorting_')]
+#[Route('/topological_sorting', name: 'app_topological_sorting_algorithm_')]
 class TopologicalSortingController extends AbstractController
 {
     public function __construct(
@@ -30,12 +30,10 @@ class TopologicalSortingController extends AbstractController
     ) {
     }
 
-    #[Route('/', name: 'app_topological_sorting')]
+    #[Route('/', name: 'index')]
     public function index(): Response
     {
-        return $this->render('topological_sorting/index.html.twig', [
-            'controller_name' => 'TopologicalSortingController',
-        ]);
+        return $this->render('topological_sorting/index.html.twig');
     }
 
     #[Route('/create', name: 'create')]

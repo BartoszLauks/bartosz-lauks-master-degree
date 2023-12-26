@@ -36,9 +36,7 @@ class DFSController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(): Response
     {
-        return $this->render('dfs/index.html.twig', [
-            'controller_name' => 'DFSController',
-        ]);
+        return $this->render('dfs/index.html.twig');
     }
 
     #[Route('/create', name: 'create')]
