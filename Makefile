@@ -73,3 +73,6 @@ execphp:
 
 execdb:
 	docker-compose exec bartosz-lauks-master-degree-mysql bash
+
+start_queued_message_handling:
+	docker-compose exec -T bartosz-lauks-master-degree-php php bin/console messenger:consume async

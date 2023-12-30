@@ -1,0 +1,56 @@
+{% extends 'Header.html.twig' %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block body %}
+    <div class="center-bar-test">
+        <h4>Algorithm implementation tests</h4>
+    </div>
+
+    {% if tests|default %}
+        {% set index = previous + 10 %}
+        {% for test in tests %}
+            {% set index = 1 + index %}
+            <div class="card">
+                <p>{{ index }}.</p>
+                <h5 class="card-header"> Algorithm : {{ test.algorithm }}</h5>
+                <div class="card-body">
+                    <p class="card-title">Language : {{ test.language }}</p>
+                    <p class="card-title status-{{ test.status }}">Status : {{ test.status }}</p>
+                    <p class="card-text">Type : {{ test.type }}</p>
+                    <p class="card-text"><small class="text-muted">Implementation added at : {{ test.createdAt|date("F jS \\a\\t g:ia") }}</small></p>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <p class="card-text"><small class="text-muted">By : {{ test.user.name }} {{ test.user.surname }} <a href="{{ path('app_dashboard_user_tests', { uuid : test.user.uuid}) }}">({{ test.user.email }})</a></small></p>
+                    {% else %}
+                        <p class="card-text"><small class="text-muted">By : {{ test.user.name }} {{ test.user.surname }} ({{ test.user.email }})</small></p>
+                    {% endif %}
+                    <a href="{{ path('app_dashboard_test', { uuid : test.uuid }) }}">
+                        <button class="btn btn-primary">Detail</button>
+                    </a>
+                </div>
+
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="center-bar-warning">
+            <h4>Nothing found</h4>
+        </div>
+    {% endif %}
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            {% if previous >= 0 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path('app_dashboard_tests', { offset: previous }) }}">Previous</a>
+                </li>
+            {% endif %}
+            {% if next < tests|length %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path('app_dashboard_tests', { offset: next }) }}">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

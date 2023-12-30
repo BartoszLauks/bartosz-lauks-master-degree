@@ -1,0 +1,67 @@
+{% extends 'Header.html.twig' %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block body %}
+    <div class="center-bar-test">
+        <h4>Details test algorithm implementation</h4>
+    </div>
+    {% if test|default %}
+        <div class="center">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <td>Algorithm :</td>
+                    <td>{{ test.algorithm }}</td>
+                </tr>
+                <tr>
+                    <td>Language :</td>
+                    <td>{{ test.language }}</td>
+                </tr>
+                <tr class="status-{{ test.status }}">
+                    <td>Status :</td>
+                    <td>{{ test.status }}</td>
+                </tr>
+                <tr>
+                    <td>Type :</td>
+                    <td>{{ test.type }}</td>
+                </tr>
+                <tr>
+                    <td>Usage kB in computational complexity test :</td>
+                    <td>{{ test.result }}</td>
+                </tr>
+                <tr>
+                    <td>Response :</td>
+                    <td>{{ test.response|raw }}</td>
+                </tr>
+                <tr>
+                    <td>Test uuid :</td>
+                    <td>{{ test.uuid }}</td>
+                </tr>
+                <tr>
+                    <td>Updated at :</td>
+                    <td>{{ test.updatedAt|date("F jS \\a\\t g:ia") }}</td>
+                </tr>
+                <tr>
+                    <td>Implementation added at :</td>
+                    <td>{{ test.createdAt|date("F jS \\a\\t g:ia") }}</td>
+                </tr>
+                <tr>
+                    <td>By :</td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td>{{ test.user.name }} {{ test.user.surname }} <a href="{{ path('app_dashboard_user_tests', { uuid : test.user.uuid}) }}">({{ test.user.email }})</a></td>
+                    {% else %}
+                        <td>{{ test.user.name }} {{ test.user.surname }} ({{ test.user.email }})</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Testing output :</td>
+                    <td>{{ output|raw }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

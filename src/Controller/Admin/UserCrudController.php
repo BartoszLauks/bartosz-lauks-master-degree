@@ -27,6 +27,8 @@ class UserCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             EmailField::new('email'),
+            TextField::new('name'),
+            TextField::new('surname'),
             ChoiceField::new('roles', 'Roles')
                 ->allowMultipleChoices()
                 ->autocomplete()
@@ -37,7 +39,7 @@ class UserCrudController extends AbstractCrudController
                 ),
             TextField::new('password')->hideWhenUpdating()->setMaxLength(10),
             BooleanField::new('is_verified'),
-            TextField::new('uuid'),
+            TextField::new('uuid')->hideOnForm(),
             AssociationField::new('gender'),
             DateTimeField::new('updatedAt')->hideOnForm(),
             DateTimeField::new('createdAt')->hideOnForm()

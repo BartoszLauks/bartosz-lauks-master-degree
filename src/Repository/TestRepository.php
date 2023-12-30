@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Test;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,6 +18,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TestRepository extends ServiceEntityRepository
 {
+    public const PAGINATOR_PER_PAGE = 10;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Test::class);
@@ -33,5 +37,31 @@ class TestRepository extends ServiceEntityRepository
     public function flush() : void
     {
         $this->_em->flush();
+    }
+
+    public function getUserTestsPaginator(User $user, int $offset): Paginator
+    {
+        $query = $this->createQueryBuilder('t')
+            ->where('t.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('t.createdAt', 'DESC')
+            ->setMaxResults(self::PAGINATOR_PER_PAGE)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ;
+
+        return new Paginator($query);
+    }
+
+    public function getAllTestsPaginator(User $user, int $offset): Paginator
+    {
+        $query = $this->createQueryBuilder('t')
+            ->orderBy('t.createdAt', 'DESC')
+            ->setMaxResults(self::PAGINATOR_PER_PAGE)
+            ->setFirstResult($offset)
+            ->getQuery()
+        ;
+
+        return new Paginator($query);
     }
 }

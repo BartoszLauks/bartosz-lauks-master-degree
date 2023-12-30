@@ -38,6 +38,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/search, roles: ROLE_ADMIN }
          - { path: ^/bellman_ford, roles: ROLE_USER }
          - { path: ^/bfs, roles: ROLE_USER }
          - { path: ^/dfs, roles: ROLE_USER }
@@ -48,6 +49,7 @@ security:
          - { path: ^/kruskal, roles: ROLE_USER }
          - { path: ^/prim, roles: ROLE_USER }
          - { path: ^/topological_sorting, roles: ROLE_USER }
+         - { path: ^/dashboard, roles: ROLE_USER }
 
 when@test:
     security:

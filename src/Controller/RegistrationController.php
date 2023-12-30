@@ -54,6 +54,8 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
+            $this->addFlash('info', 'We have sent an e-mail verification message to the e-mail address you provided. Approve it.');
+
             return $this->redirectToRoute('app_home');
         }
 

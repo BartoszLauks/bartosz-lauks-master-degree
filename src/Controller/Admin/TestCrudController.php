@@ -7,7 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CodeEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -27,7 +27,14 @@ class TestCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('algorithm')->hideOnForm(),
             TextField::new('type')->hideOnForm(),
-            TextField::new('status'),
+            ChoiceField::new('status')
+                ->allowMultipleChoices(false)
+                ->setChoices([
+                'WAITING' => 'WAITING',
+                'CHECKED' => 'CHECKED',
+                'VERIFIED' => 'VERIFIED',
+                'ERROR' => 'ERROR'
+                ]),
             IntegerField::new('result'),
             TextEditorField::new('response'),
             TextField::new('language')->hideOnForm(),

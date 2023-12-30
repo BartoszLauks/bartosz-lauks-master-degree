@@ -141,11 +141,11 @@
                     padding: 15px;
                     background-image: linear-gradient(to bottom right, rgb(225, 177, 38), rgb(162, 129, 24));;
                 }
-                .center-bar-post
+                .center-bar-test
                 {
                     text-align: center;
                     padding: 15px;
-                    background-color: #7BA4A8;
+                    background-color: #e1b126;
                     margin-top: 15px;
                     margin-bottom: 15px;
                 }
@@ -164,7 +164,12 @@
                 }
                 .card
                 {
+                    color: black;
                     position: static;
+                    padding: 5px;
+                    border: 10px #e1b126 ridge;
+                    margin-bottom: 4px;
+                    background-color: #f8e9d0;
                 }
                 .center-dedication
                 {
@@ -179,6 +184,18 @@
                     text-align: justify;
                     background-color: #daccb5;
                     padding-left: 10px;
+                }
+                .status-WAITING {
+                    color: #b6b601;
+                }
+                .status-CHECKED {
+                    color: #b6b601;
+                }
+                .status-VERIFIED {
+                    color: limegreen;
+                }
+                .status-ERROR {
+                    color: darkred;
                 }
             </style>
         {% endblock %}
@@ -199,9 +216,6 @@
                 <a class="navbar-brand" href="{{ path('app_home') }}">Home</a>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul class="navbar-nav mr-auto">
-{#                        <li class="nav-item active">#}
-{#                            <a class="nav-link" href="#">Disable<span class="sr-only">(current)</span></a>#}
-{#                        </li>#}
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_bfs_algorithm_index') }}">BFS</a>
@@ -233,10 +247,22 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('app_fleury_algorithm_index') }}">Fleury</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('app_dashboard_tests') }}">My Tests</a>
+                            </li>
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN') %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_admin') }}">Admin panel</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Admin options
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ path('app_dashboard_all_tests') }}">All Tests</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ path('app_admin') }}">Admin panel</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" target="_blank" href="http://localhost:15672/">Queue</a>
+                                </div>
                             </li>
                         {% endif %}
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
@@ -252,10 +278,12 @@
                             </li>
                         {% endif %}
                     </ul>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </form>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <form class="form-inline my-2 my-lg-0" action="{{ path('app_search') }}">
+                            <input class="form-control mr-sm-2" type="search" id="search-text" required name="search-text" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </form>
+                    {% endif %}
                 </div>
             </nav>
         </div>

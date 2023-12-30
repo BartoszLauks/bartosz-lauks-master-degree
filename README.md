@@ -12,7 +12,6 @@
 - Algorytm Floyd-Warshalla +
 - Algorytm Topologicznego Sortowania +
 
-## TODO BFS
 ### Testowanie
 - Graf pusty:
 

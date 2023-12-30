@@ -20,6 +20,8 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email')
+            ->add('name')
+            ->add('surname')
             ->add('gender', EntityType::class, [
                 'class' => Gender::class
             ])
