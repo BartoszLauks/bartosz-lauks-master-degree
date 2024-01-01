@@ -73,42 +73,4 @@ class BellmanFordController extends AbstractController
             'form' => $form
         ]);
     }
-
-    #[Route('/test')]
-    public function test()
-    {
-        $test = $this->testRepository->find(28);
-
-        if ($test->getStatus() !== 'VERIFIED' && $test->getStatus() !== 'ERROR') {
-            $token = $test->getToken();
-            $testPath = sprintf('%s%s',  $this->parameterBag->get('uploads_dir_BellmanFord'), $test->getUuid());
-            exec(sprintf('python %s/main.py %s > %s/output.txt', $testPath, $test->getToken(), $testPath));
-            $mainTestPath = sprintf('%s%s', $testPath, '/output.txt');
-            if ($this->filesystem->exists($mainTestPath)) {
-                $fileContent = file_get_contents($mainTestPath);
-                $errorFlag = sprintf('%s %s', $token, 'ERROR');
-                if (is_int(strpos($fileContent, $errorFlag))) {
-                    $test->setStatus('ERROR');
-                    $test->setResponse('An error was encountered.');
-                } else {
-                    exec(sprintf('python %s/computationalComplexityMain.py %s >> %s/output.txt', $testPath, $test->getToken(), $testPath));
-                    if (is_int(strpos($fileContent, $errorFlag))) {
-                        $test->setStatus('ERROR');
-                        $test->setResponse('An error was encountered.');
-                    } else {
-                        $test->setStatus('VERIFIED');
-                        $test->setResponse('Testing completed successfully.');
-                    }
-
-                }
-            } else {
-                $test->setStatus('ERROR');
-                $test->setResponse("Your implementation's main test result was not received. Contact your administrator.");
-            }
-            $this->testRepository->save($test);
-            dd("done");
-        }
-
-        dd("Miss");
-    }
 }
