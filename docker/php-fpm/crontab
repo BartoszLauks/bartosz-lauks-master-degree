@@ -1,0 +1,1 @@
+10 22 * * * php /app/bin/console app:AddWaitingImplementationToTesting >> /var/log/schedule.log 2>&1
