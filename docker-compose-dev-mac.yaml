@@ -25,10 +25,15 @@ services:
       - bartosz-lauks-master-degree-api-vendor-sync:/app/vendor
       - bartosz-lauks-master-degree-api-app-sync:/app
 
+  bartosz-lauks-master-degree-rabbitmq:
+    container_name: bartosz-lauks-master-degree-rabbitmq-dev-local
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+
 volumes:
   bartosz-lauks-master-degree-api-vendor-sync:
     external: true
   bartosz-lauks-master-degree-api-app-sync:
     external: true
-
-# TODO add rabbitmq for dev-mac environment

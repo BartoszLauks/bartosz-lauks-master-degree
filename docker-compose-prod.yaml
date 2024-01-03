@@ -18,4 +18,8 @@ services:
     ports:
       - '8081:80'
 
-# TODO add rabbitmq for prod environment
+  bartosz-lauks-master-degree-rabbitmq:
+    container_name: bartosz-lauks-master-degree-rabbitmq-prod
+    ports:
+      - '5672:5672'
+      - '15672:15672'
