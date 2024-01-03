@@ -11,7 +11,10 @@ RUN apk update \
     zlib-dev \
     libxml2-dev \
     libzip-dev \
-    icu-dev
+    icu-dev \
+    supervisor
+
+COPY supervisord.conf /etc/supervisord.conf
 
 
 RUN touch /var/log/schedule.log
@@ -39,6 +42,8 @@ RUN ln -s /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo $TIMEZONE > /etc/
 RUN "date"
 
 CMD crond -b && rsyslogd && php-fpm
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
 
 # Install python/pip
 ENV PYTHONUNBUFFERED=1

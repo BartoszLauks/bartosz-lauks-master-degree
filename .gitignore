@@ -17,6 +17,8 @@ public/*
 !public/floyd_warshall
 !public/johnson
 !public/fleury
+supervisord.log
+supervisord.pid
 ###< symfony/framework-bundle ###
 
 ### PhpStorm ###
