@@ -70,10 +70,14 @@ class DashboardController extends AbstractController
     public function test(Test $test): Response
     {
         $output = $this->getOutputTestingFile($test);
+        if ($test->getStatus() === 'VERIFIED') {
+            $percent = $this->testRepository->getPercentageOfTestsLowerResult($test->getResult(), $test->getAlgorithm());
+        }
 
         return $this->render('dashboard/details.html.twig', [
             'test' => $test,
-            'output' => $output
+            'output' => $output,
+            'percent' => $percent ?? null
         ]);
     }
 

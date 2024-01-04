@@ -30,7 +30,7 @@
                 </tr>
                 <tr>
                     <td>Usage kB in computational complexity test :</td>
-                    <td>{{ test.result }}</td>
+                    <td>{{ test.result }} {% if percent|default %}({{ percent }}% Higher memory consumption by other user implementations){% endif %}</td>
                 </tr>
                 <tr>
                     <td>Response :</td>

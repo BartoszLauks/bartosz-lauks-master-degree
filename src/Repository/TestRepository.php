@@ -64,4 +64,20 @@ class TestRepository extends ServiceEntityRepository
 
         return new Paginator($query);
     }
+
+    public function getPercentageOfTestsLowerResult(int $result, string $algorithm)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "select ROUND((count(*) / (select count(*) from test where status like 'VERIFIED' and algorithm like :algorithm )) * 100) as 'percent'
+    from test t
+where status like 'VERIFIED' and algorithm like :algorithm and result <= :result";
+
+        $resultSet = $conn->executeQuery($sql, [
+            'algorithm' => $algorithm,
+            'result' => $result
+        ]);
+
+        return $resultSet->fetchOne();
+    }
 }
