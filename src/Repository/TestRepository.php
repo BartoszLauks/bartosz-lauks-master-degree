@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Test;
 use App\Entity\User;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
@@ -63,6 +64,20 @@ class TestRepository extends ServiceEntityRepository
         ;
 
         return new Paginator($query);
+    }
+
+    public function getCountUserTestsOlderThen(User $user, string $algorithm, DateTime $time)
+    {
+        $query = $this->createQueryBuilder('t')
+            ->select('count(t.id)')
+            ->where('t.algorithm LIKE :algorithm')
+            ->andWhere('t.createdAt >= :time')
+            ->setParameter('algorithm', $algorithm)
+            ->setParameter('time', $time)
+            ->getQuery()
+            ->getSingleColumnResult()
+            ;
+        return $query;
     }
 
     public function getPercentageOfTestsLowerResult(int $result, string $algorithm)
