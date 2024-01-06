@@ -51,7 +51,7 @@ class BFSController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $testCount = $this->testRepository->getCountUserTestsOlderThen($this->getUser(), $test->getAlgorithm(), new \DateTime('-1 hour'));
 
-            if ($testCount > 5 && !$this->isGranted('ROLE_ADMIN')) {
+            if ($testCount[0] >= $_ENV['IMPLEMENTATION_PER_HOUR'] && !$this->isGranted('ROLE_ADMIN')) {
                 $this->addFlash('danger', "You've send too many implementations. Please wait a moment to be able to add additional ones.");
 
                 return $this->render('bfs/create.html.twig', [
@@ -59,8 +59,7 @@ class BFSController extends AbstractController
                 ]);
             }
 
-
-                $test->setUuid(Uuid::v7());
+            $test->setUuid(Uuid::v7());
             $test->setUser($this->getUser());
             $test->setToken($this->stringGenerator->getToken(Test::TOKEN_LENGTH));
 

@@ -70,8 +70,10 @@ class TestRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('t')
             ->select('count(t.id)')
-            ->where('t.algorithm LIKE :algorithm')
+            ->andWhere('t.user = :user')
+            ->andWhere('t.algorithm LIKE :algorithm')
             ->andWhere('t.createdAt >= :time')
+            ->setParameter('user', $user)
             ->setParameter('algorithm', $algorithm)
             ->setParameter('time', $time)
             ->getQuery()
