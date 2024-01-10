@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\TestRepository;
+use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\HasLifecycleCallbacks()]
 #[ORM\Entity(repositoryClass: TestRepository::class)]
@@ -71,6 +73,14 @@ class Test
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'test', targetEntity: ChatMessages::class)]
+    private Collection $chatMessages;
+
+    public function __construct()
+    {
+        $this->chatMessages = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -186,7 +196,7 @@ class Test
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -194,12 +204,12 @@ class Test
     #[ORM\PrePersist()]
     public function setCreatedAt(): static
     {
-        $this->createdAt = new \DateTimeImmutable('now');
+        $this->createdAt = new DateTimeImmutable('now');
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
@@ -208,7 +218,7 @@ class Test
     #[ORM\PreUpdate()]
     public function setUpdatedAt(): static
     {
-        $this->updatedAt = new \DateTimeImmutable('now');
+        $this->updatedAt = new DateTimeImmutable('now');
 
         return $this;
     }
@@ -216,6 +226,35 @@ class Test
     public function __toString(): string
     {
         return $this->id;
+    }
+
+    /**
+     * @return Collection<int, ChatMessages>
+     */
+    public function getChatMessages(): Collection
+    {
+        return $this->chatMessages;
+    }
+
+    public function addChatMessage(ChatMessages $chatMessage): static
+    {
+        if (!$this->chatMessages->contains($chatMessage)) {
+            $this->chatMessages->add($chatMessage);
+            $chatMessage->setTest($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChatMessage(ChatMessages $chatMessage): static
+    {
+        if ($this->chatMessages->removeElement($chatMessage)) {
+            if ($chatMessage->getTest() === $this) {
+                $chatMessage->setTest(null);
+            }
+        }
+
+        return $this;
     }
 
 }

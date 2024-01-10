@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\GenderRepository;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -71,7 +72,6 @@ class Gender
     public function removeUser(User $user): static
     {
         if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
             if ($user->getGender() === $this) {
                 $user->setGender(null);
             }
@@ -86,7 +86,7 @@ class Gender
     }
 
     #[ORM\PrePersist()]
-    public function setCreatedAt(): static
+    public function setCreatedAt(DateTimeImmutable $dateTimeImmutable): static
     {
         $this->createdAt = new \DateTimeImmutable('now');
 
@@ -100,9 +100,26 @@ class Gender
 
     #[ORM\PrePersist()]
     #[ORM\PreUpdate()]
-    public function setUpdatedAt(): static
+    public function setUpdatedAt(DateTimeImmutable $dateTimeImmutable): static
     {
         $this->updatedAt = new \DateTimeImmutable('now');
+
+        return $this;
+    }
+
+    #[ORM\PrePersist()]
+    public function initiatingCreatedAt(): static
+    {
+        $this->createdAt = new DateTimeImmutable('now');
+
+        return $this;
+    }
+
+    #[ORM\PrePersist()]
+    #[ORM\PreUpdate()]
+    public function initiatingUpdatedAt(): static
+    {
+        $this->updatedAt = new DateTimeImmutable('now');
 
         return $this;
     }

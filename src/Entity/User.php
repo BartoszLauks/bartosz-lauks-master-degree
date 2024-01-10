@@ -74,9 +74,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank()]
     private ?string $surname = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ChatMessages::class)]
+    private Collection $chatMessages;
+
     public function __construct()
     {
         $this->tests = new ArrayCollection();
+        $this->chatMessages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,7 +192,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeTest(Test $test): static
     {
         if ($this->tests->removeElement($test)) {
-            // set the owning side to null (unless already changed)
             if ($test->getUser() === $this) {
                 $test->setUser(null);
             }
@@ -261,6 +264,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSurname(string $surname): static
     {
         $this->surname = $surname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ChatMessages>
+     */
+    public function getChatMessages(): Collection
+    {
+        return $this->chatMessages;
+    }
+
+    public function addChatMessage(ChatMessages $chatMessage): static
+    {
+        if (!$this->chatMessages->contains($chatMessage)) {
+            $this->chatMessages->add($chatMessage);
+            $chatMessage->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChatMessage(ChatMessages $chatMessage): static
+    {
+        if ($this->chatMessages->removeElement($chatMessage)) {
+            if ($chatMessage->getUser() === $this) {
+                $chatMessage->setUser(null);
+            }
+        }
 
         return $this;
     }
