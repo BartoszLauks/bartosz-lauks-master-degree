@@ -7,6 +7,7 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\HasLifecycleCallbacks()]
 #[ORM\Entity(repositoryClass: ChatMessagesRepository::class)]
@@ -18,6 +19,7 @@ class ChatMessages
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank()]
     private ?string $body = null;
 
     #[ORM\ManyToOne(inversedBy: 'chatMessages')]

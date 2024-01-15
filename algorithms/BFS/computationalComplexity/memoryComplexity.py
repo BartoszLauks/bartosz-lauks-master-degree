@@ -1,20 +1,5 @@
-import resource
-import signal
-import sys
 import tracemalloc
-
-from userBFS import bfs
-
-
-def time_exceeded(signo, frame):
-    print(sys.argv[1], 'ERROR TIME OUT')
-    sys.exit(1)
-
-
-def set_max_runtime(seconds):
-    soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-    resource.setrlimit(resource.RLIMIT_CPU, (seconds, hard))
-    signal.signal(signal.SIGXCPU, time_exceeded)
+from collections import deque
 
 
 class Graph:
@@ -110,20 +95,24 @@ class Graph:
                       351: [732], 708: [750], 201: [16], 293: [371], 509: [832], 409: [805]}
 
 
+def bfs(graph: Graph, start: int) -> []:
+    visited = []
+    queue = deque([start])
+
+    while queue:
+        current_node = queue.popleft()
+
+        if current_node not in visited:
+            visited.append(current_node)
+            queue.extend(neighbor for neighbor in graph.graph.get(current_node, []) if neighbor not in visited)
+
+    return visited
+
+
 if __name__ == '__main__':
-    if len(sys.argv) < 4:
-        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
-    set_max_runtime(int(sys.argv[2]))
-    print(sys.argv[1], 'START COMPUTATIONAL COMPLEXITY TEST')
-    PEEK_MEMORY = int(sys.argv[3])
     graph = Graph()
     tracemalloc.start()
     bfs(graph, 0)
     peekTracedMemory = int(tracemalloc.get_traced_memory()[1])
     tracemalloc.stop()
-
-    print(sys.argv[1], 'PEEK MEMORY USAGE BY YOUR IMPLEMENTATION:', peekTracedMemory)
-    if peekTracedMemory < (PEEK_MEMORY * 2):
-        print(sys.argv[1], 'FINISH COMPUTATIONAL COMPLEXITY TEST')
-    else:
-        print(sys.argv[1], 'ERROR MEMORY LIMIT EXCEEDED')
+    print(peekTracedMemory)
