@@ -1,20 +1,5 @@
-import resource
-import signal
-import sys
+import heapq
 import tracemalloc
-
-from userPrim import prim
-
-
-def time_exceeded(signo, frame):
-    print(sys.argv[1], 'ERROR TIME OUT')
-    sys.exit(1)
-
-
-def set_max_runtime(seconds):
-    soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-    resource.setrlimit(resource.RLIMIT_CPU, (seconds, hard))
-    signal.signal(signal.SIGXCPU, time_exceeded)
 
 
 class Graph:
@@ -88,21 +73,30 @@ class Graph:
                       197: [(133, 579), (166, 210)], 166: [(197, 210), (42, 610)]}
 
 
+def prim(graph: Graph, start_vertex) -> []:
+    visited = set()
+    min_heap = [(0, start_vertex, None)]
+    minimum_spanning_tree = []
+
+    while min_heap:
+        weight, current_vertex, parent_vertex = heapq.heappop(min_heap)
+
+        if current_vertex not in visited:
+            visited.add(current_vertex)
+
+            if parent_vertex is not None:
+                minimum_spanning_tree.append((parent_vertex, current_vertex, weight))
+
+            for neighbor, edge_weight in graph.graph[current_vertex]:
+                heapq.heappush(min_heap, (edge_weight, neighbor, current_vertex))
+
+    return minimum_spanning_tree
+
+
 if __name__ == '__main__':
-    if len(sys.argv) < 4:
-        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
-        sys.exit()
-    set_max_runtime(int(sys.argv[2]))
-    print(sys.argv[1], 'START COMPUTATIONAL COMPLEXITY TEST')
-    PEEK_MEMORY = int(sys.argv[3])
     graph = Graph()
     tracemalloc.start()
     prim(graph, list(graph.graph.keys())[0])
     peekTracedMemory = int(tracemalloc.get_traced_memory()[1])
     tracemalloc.stop()
-
-    print(sys.argv[1], 'PEEK MEMORY USAGE BY YOUR IMPLEMENTATION:', peekTracedMemory)
-    if peekTracedMemory < (PEEK_MEMORY * 2):
-        print(sys.argv[1], 'FINISH COMPUTATIONAL COMPLEXITY TEST')
-    else:
-        print(sys.argv[1], 'ERROR MEMORY LIMIT EXCEEDED')
+    print(peekTracedMemory)

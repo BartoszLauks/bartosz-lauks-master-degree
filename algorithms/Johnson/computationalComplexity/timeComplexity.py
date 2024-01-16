@@ -1,25 +1,6 @@
-import copy
 import random
-import resource
-import signal
-import sys
-
-try:
-    from userJohnson import johnson
-except Exception as e:
-    print(sys.argv[1], 'ERROR IMPORT')
-    sys.exit()
-
-
-def time_exceeded(signo, frame):
-    print(sys.argv[1], 'ERROR TIME OUT')
-    sys.exit(1)
-
-
-def set_max_runtime(seconds):
-    soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-    resource.setrlimit(resource.RLIMIT_CPU, (seconds, hard))
-    signal.signal(signal.SIGXCPU, time_exceeded)
+import time
+import math
 
 
 class Graph:
@@ -32,15 +13,15 @@ class Graph:
         self.graph[source].append((destination, weight))
 
 
-def remove_inf_origin(dict):
+def remove_inf(dict):
     for key, value in list(dict.items()):
         if isinstance(value, dict):
-            remove_inf_origin(value)
+            remove_inf(value)
         elif value == float('inf'):
             del dict[key]
 
 
-def bellman_ford_origin(graph: Graph, source):
+def bellman_ford(graph: Graph, source):
     distance = {node: float('inf') for node in graph.graph}
     distance[source] = 0
 
@@ -59,13 +40,13 @@ def bellman_ford_origin(graph: Graph, source):
     return distance
 
 
-def reweight_edges_origin(graph: Graph, distances):
+def reweight_edges(graph: Graph, distances):
     for u in graph.graph:
         for i, (v, weight) in enumerate(graph.graph[u]):
             graph.graph[u][i] = (v, weight + distances[u] - distances[v])
 
 
-def dijkstra_origin(graph: Graph, source, distances):
+def dijkstra(graph: Graph, source, distances):
     distance = {node: float('inf') for node in graph.graph}
     distance[source] = 0
     visited = set()
@@ -82,22 +63,22 @@ def dijkstra_origin(graph: Graph, source, distances):
     return distance
 
 
-def johnson_origin(graph: Graph):
+def johnson(graph: Graph):
     new_node = 'NEW_NODE'
     graph.graph[new_node] = [(node, 0) for node in graph.graph]
 
-    distances = bellman_ford_origin(graph, new_node)
+    distances = bellman_ford(graph, new_node)
 
     if any(distances[node] == float('inf') for node in distances):
         return None
 
-    reweight_edges_origin(graph, distances)
+    reweight_edges(graph, distances)
 
     del graph.graph[new_node]
 
     shortest_paths = {}
     for node in graph.graph:
-        shortest_paths[node] = dijkstra_origin(graph, node, distances)
+        shortest_paths[node] = dijkstra(graph, node, distances)
 
     # remove_inf_origin(shortest_paths)
 
@@ -121,26 +102,9 @@ def generate_random_graph(size, min_weight, max_weight):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
-        sys.exit()
-    set_max_runtime(int(sys.argv[2]) * 2)
-    print(sys.argv[1], 'START MAIN TEST')
-    print('BRUTE FORCE TEST UNIT')
+    start = time.time()
     for testNumber in range(1, 31):
-        print('CASE :', testNumber)
         graph = generate_random_graph(5 * testNumber, 0, testNumber * 5)
-        print(graph.graph)
-        #graph2 = copy.deepcopy(graph)
-        originResult = johnson_origin(graph)
-        try:
-            userResult = johnson(graph)
-            print(originResult)
-            print(userResult)
-            if originResult != userResult:
-                print(sys.argv[1], 'ERROR ALGORITHM RESULT')
-                sys.exit()
-        except Exception as e:
-            print(sys.argv[1], 'ERROR USER IMPLEMENTATION', e)
-            sys.exit()
-    print(sys.argv[1], 'FINISH MAIN TEST')
+        johnson(graph)
+    end = time.time()
+    print(math.ceil(end - start))

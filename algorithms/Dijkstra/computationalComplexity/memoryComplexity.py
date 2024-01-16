@@ -1,20 +1,5 @@
-import resource
-import signal
-import sys
+import heapq
 import tracemalloc
-
-from userDijkstra import dijkstra
-
-
-def time_exceeded(signo, frame):
-    print(sys.argv[1], 'ERROR TIME OUT')
-    sys.exit(1)
-
-
-def set_max_runtime(seconds):
-    soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-    resource.setrlimit(resource.RLIMIT_CPU, (seconds, hard))
-    signal.signal(signal.SIGXCPU, time_exceeded)
 
 
 class Graph:
@@ -182,22 +167,35 @@ class Graph:
                  (32, 5), (33, 10), (34, 13), (35, 20), (36, 14), (37, 18), (38, 16)]}
 
 
+def dijkstra(graph: Graph, start):
+    min_heap = [(0, start)]
+    visited = set()
+
+    distances = {vertex: float('infinity') for vertex in graph.graph}
+    distances[start] = 0
+
+    while min_heap:
+        current_distance, current_vertex = heapq.heappop(min_heap)
+
+        if current_vertex in visited:
+            continue
+
+        visited.add(current_vertex)
+
+        for neighbor, weight in graph.graph[current_vertex]:
+            distance = current_distance + weight
+
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(min_heap, (distance, neighbor))
+
+    return distances
+
+
 if __name__ == '__main__':
-    if len(sys.argv) < 4:
-        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
-        sys.exit()
-    set_max_runtime(int(sys.argv[2]))
-    print(sys.argv[1], 'START COMPUTATIONAL COMPLEXITY TEST')
-    PEEK_MEMORY = int(sys.argv[3])
     graph = Graph()
     tracemalloc.start()
     dijkstra(graph, 0)
     peekTracedMemory = int(tracemalloc.get_traced_memory()[1])
-    print(tracemalloc.get_traced_memory())
     tracemalloc.stop()
-
-    print(sys.argv[1], 'PEEK MEMORY USAGE BY YOUR IMPLEMENTATION:', peekTracedMemory)
-    if peekTracedMemory < (PEEK_MEMORY * 2):
-        print(sys.argv[1], 'FINISH COMPUTATIONAL COMPLEXITY TEST')
-    else:
-        print(sys.argv[1], 'ERROR MEMORY LIMIT EXCEEDED')
+    print(peekTracedMemory)

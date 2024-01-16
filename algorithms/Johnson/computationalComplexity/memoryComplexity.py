@@ -1,20 +1,4 @@
-import resource
-import signal
-import sys
 import tracemalloc
-
-from userJohnson import johnson
-
-
-def time_exceeded(signo, frame):
-    print(sys.argv[1], 'ERROR TIME OUT')
-    sys.exit(1)
-
-
-def set_max_runtime(seconds):
-    soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-    resource.setrlimit(resource.RLIMIT_CPU, (seconds, hard))
-    signal.signal(signal.SIGXCPU, time_exceeded)
 
 
 class Graph:
@@ -97,21 +81,85 @@ class Graph:
                  (22, 10), (23, 3), (24, 10)]}
 
 
+def remove_inf(dict):
+    for key, value in list(dict.items()):
+        if isinstance(value, dict):
+            remove_inf(value)
+        elif value == float('inf'):
+            del dict[key]
+
+
+def bellman_ford(graph: Graph, source):
+    distance = {node: float('inf') for node in graph.graph}
+    distance[source] = 0
+
+    for node in graph.graph:
+        if node != source and node not in distance:
+            distance[node] = float('inf')
+
+    for _ in range(len(graph.graph) - 1):
+        for node in graph.graph:
+            if distance[node] == float('inf'):
+                continue
+            for neighbor, weight in graph.graph.get(node, []):
+                if distance[node] + weight < distance.get(neighbor, float('inf')):
+                    distance[neighbor] = distance[node] + weight
+
+    return distance
+
+
+def reweight_edges(graph: Graph, distances):
+    for u in graph.graph:
+        for i, (v, weight) in enumerate(graph.graph[u]):
+            graph.graph[u][i] = (v, weight + distances[u] - distances[v])
+
+
+def dijkstra(graph: Graph, source, distances):
+    distance = {node: float('inf') for node in graph.graph}
+    distance[source] = 0
+    visited = set()
+
+    while len(visited) < len(graph.graph):
+        current_node = min((node for node in graph.graph if node not in visited), key=lambda x: distance[x])
+        visited.add(current_node)
+
+        for neighbor, weight in graph.graph.get(current_node, []):
+            if distance[current_node] + weight < distance.get(neighbor, float('inf')):
+                distance[neighbor] = distance[current_node] + weight
+    distance = {node: dist - distances[source] + distances[node] for node, dist in distance.items()}
+
+    return distance
+
+
+def johnson(graph: Graph):
+    new_node = 'NEW_NODE'
+    graph.graph[new_node] = [(node, 0) for node in graph.graph]
+
+    distances = bellman_ford(graph, new_node)
+
+    if any(distances[node] == float('inf') for node in distances):
+        return None
+
+    reweight_edges(graph, distances)
+
+    del graph.graph[new_node]
+
+    shortest_paths = {}
+    for node in graph.graph:
+        shortest_paths[node] = dijkstra(graph, node, distances)
+
+    # remove_inf_origin(shortest_paths)
+
+    if shortest_paths is None:
+        return {}
+
+    return shortest_paths
+
+
 if __name__ == '__main__':
-    if len(sys.argv) < 4:
-        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
-        sys.exit()
-    set_max_runtime(int(sys.argv[2]))
-    print(sys.argv[1], 'START COMPUTATIONAL COMPLEXITY TEST')
-    PEEK_MEMORY = int(sys.argv[3])
     graph = Graph()
     tracemalloc.start()
     johnson(graph)
     peekTracedMemory = int(tracemalloc.get_traced_memory()[1])
     tracemalloc.stop()
-
-    print(sys.argv[1], 'PEEK MEMORY USAGE BY YOUR IMPLEMENTATION:', peekTracedMemory)
-    if peekTracedMemory < (PEEK_MEMORY * 2):
-        print(sys.argv[1], 'FINISH COMPUTATIONAL COMPLEXITY TEST')
-    else:
-        print(sys.argv[1], 'ERROR MEMORY LIMIT EXCEEDED')
+    print(peekTracedMemory)

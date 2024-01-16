@@ -1,25 +1,6 @@
-import copy
+import math
 import random
-import resource
-import signal
-import sys
-
-try:
-    from userFleury import fleury
-except Exception as e:
-    print(sys.argv[1], 'ERROR IMPORT')
-    sys.exit()
-
-
-def time_exceeded(signo, frame):
-    print(sys.argv[1], 'ERROR TIME OUT')
-    sys.exit(1)
-
-
-def set_max_runtime(seconds):
-    soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-    resource.setrlimit(resource.RLIMIT_CPU, (seconds, hard))
-    signal.signal(signal.SIGXCPU, time_exceeded)
+import time
 
 
 class Graph:
@@ -31,7 +12,7 @@ class Graph:
         self.graph.setdefault(destination, []).append(source)
 
 
-def is_bridge_origin(graph, u, v):
+def is_bridge(graph, u, v):
     visited = set()
     dfs_stack = [u]
     visited.add(u)
@@ -48,7 +29,7 @@ def is_bridge_origin(graph, u, v):
     return v not in visited
 
 
-def fleury_origin(graph):
+def fleury(graph):
     odd_degree_nodes = [node for node, neighbors in graph.graph.items() if len(neighbors) % 2 == 1]
     if len(odd_degree_nodes) not in [0, 2]:
         return {}
@@ -65,7 +46,7 @@ def fleury_origin(graph):
         edge_to_remove = None
 
         for neighbor in list(neighbors):
-            if is_bridge_origin(graph.graph, current_node, neighbor):
+            if is_bridge(graph.graph, current_node, neighbor):
                 continue
 
             edge_to_remove = (current_node, neighbor)
@@ -98,28 +79,9 @@ def generate_random_graph(num_vertices: int, num_edges: int):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
-        sys.exit()
-    set_max_runtime(int(sys.argv[2]) * 2)
-    print(sys.argv[1], 'START MAIN TEST')
-    print('BRUTE FORCE TEST UNIT')
+    start = time.time()
     for testNumber in range(1, 501):
-        print('CASE :', testNumber)
         graph = generate_random_graph(testNumber, testNumber)
-        graph2 = copy.deepcopy(graph)
-        try:
-            originResult = fleury_origin(graph)
-        except Exception as e:
-            continue
-        try:
-            userResult = fleury(graph2)
-            print(originResult)
-            print(userResult)
-            if originResult != userResult:
-                print(sys.argv[1], 'ERROR ALGORITHM RESULT')
-                sys.exit()
-        except Exception as e:
-            print(sys.argv[1], 'ERROR USER IMPLEMENTATION', e)
-            sys.exit()
-    print(sys.argv[1], 'FINISH MAIN TEST')
+        fleury(graph)
+    end = time.time()
+    print(math.ceil(end - start))

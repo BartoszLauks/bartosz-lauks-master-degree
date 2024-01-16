@@ -50,6 +50,7 @@ def bfs_origin(graph: Graph, start: int) -> []:
 if __name__ == '__main__':
     if len(sys.argv) < 3:
         print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
+        sys.exit()
     set_max_runtime(int(sys.argv[2]) * 2)
     print(sys.argv[1], 'START MAIN TEST')
     print('BRUTE FORCE TEST UNIT')

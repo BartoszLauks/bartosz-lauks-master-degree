@@ -1,18 +1,4 @@
-import resource
-import signal
-import sys
 import tracemalloc
-
-from userKruskal import kruskal
-def time_exceeded(signo, frame):
-    print(sys.argv[1], 'ERROR TIME OUT')
-    sys.exit(1)
-
-
-def set_max_runtime(seconds):
-    soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-    resource.setrlimit(resource.RLIMIT_CPU, (seconds, hard))
-    signal.signal(signal.SIGXCPU, time_exceeded)
 
 
 class Graph:
@@ -140,21 +126,43 @@ class Graph:
                       (37, 38, 126), (37, 39, 162), (38, 39, 171)]
 
 
+def kruskal(graph: Graph):
+    all_vertices = set()
+    for edge in graph.graph:
+        all_vertices.add(edge[0])
+        all_vertices.add(edge[1])
+
+    num_vertices = len(all_vertices)
+
+    graph.graph = sorted(graph.graph, key=lambda x: x[2])
+
+    parent = [i for i in range(num_vertices)]
+
+    def find_set(v):
+        if parent[v] == v:
+            return v
+        return find_set(parent[v])
+
+    def union_sets(u, v):
+        root_u = find_set(u)
+        root_v = find_set(v)
+        parent[root_u] = root_v
+
+    min_spanning_tree = []
+
+    for edge in graph.graph:
+        u, v, w = edge
+        if find_set(u) != find_set(v):
+            min_spanning_tree.append((u, v, w))
+            union_sets(u, v)
+
+    return min_spanning_tree
+
+
 if __name__ == '__main__':
-    if len(sys.argv) < 4:
-        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
-        sys.exit()
-    set_max_runtime(int(sys.argv[2]))
-    print(sys.argv[1], 'START COMPUTATIONAL COMPLEXITY TEST')
-    PEEK_MEMORY = int(sys.argv[3])
     graph = Graph()
     tracemalloc.start()
     kruskal(graph)
     peekTracedMemory = int(tracemalloc.get_traced_memory()[1])
     tracemalloc.stop()
-
-    print(sys.argv[1], 'PEEK MEMORY USAGE BY YOUR IMPLEMENTATION:', peekTracedMemory)
-    if peekTracedMemory < (PEEK_MEMORY * 2):
-        print(sys.argv[1], 'FINISH COMPUTATIONAL COMPLEXITY TEST')
-    else:
-        print(sys.argv[1], 'ERROR MEMORY LIMIT EXCEEDED')
+    print(peekTracedMemory)

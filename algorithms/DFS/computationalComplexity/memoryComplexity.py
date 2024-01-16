@@ -1,20 +1,4 @@
-import resource
-import signal
-import sys
 import tracemalloc
-
-from userDFS import dfs
-
-
-def time_exceeded(signo, frame):
-    print(sys.argv[1], 'ERROR TIME OUT')
-    sys.exit(1)
-
-
-def set_max_runtime(seconds):
-    soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-    resource.setrlimit(resource.RLIMIT_CPU, (seconds, hard))
-    signal.signal(signal.SIGXCPU, time_exceeded)
 
 
 class Graph:
@@ -112,21 +96,22 @@ class Graph:
                       525: [305], 488: [516]}
 
 
+def dfs(graph: Graph, start: int, visited=None) -> []:
+    if visited is None:
+        visited = []
+    visited.append(start)
+
+    for neighbor in graph.graph.get(start, []):
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
+
+    return visited
+
+
 if __name__ == '__main__':
-    if len(sys.argv) < 4:
-        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
-        sys.exit()
-    set_max_runtime(int(sys.argv[2]))
-    print(sys.argv[1], 'START COMPUTATIONAL COMPLEXITY TEST')
-    PEEK_MEMORY = int(sys.argv[3])
     graph = Graph()
     tracemalloc.start()
     dfs(graph, 0)
     peekTracedMemory = int(tracemalloc.get_traced_memory()[1])
     tracemalloc.stop()
-
-    print(sys.argv[1], 'PEEK MEMORY USAGE BY YOUR IMPLEMENTATION:', peekTracedMemory)
-    if peekTracedMemory < (PEEK_MEMORY * 2):
-        print(sys.argv[1], 'FINISH COMPUTATIONAL COMPLEXITY TEST')
-    else:
-        print(sys.argv[1], 'ERROR MEMORY LIMIT EXCEEDED')
+    print(peekTracedMemory)

@@ -1,26 +1,7 @@
 import heapq
 import random
-import resource
-import signal
-import sys
-
-try:
-    from userDijkstra import dijkstra
-except Exception as e:
-    print(sys.argv[1], 'ERROR IMPORT')
-    sys.exit()
-
-
-def time_exceeded(signo, frame):
-    print(sys.argv[1], 'ERROR TIME OUT')
-    sys.exit(1)
-
-
-def set_max_runtime(seconds):
-    soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-    resource.setrlimit(resource.RLIMIT_CPU, (seconds, hard))
-    signal.signal(signal.SIGXCPU, time_exceeded)
-
+import time
+import math
 
 class Graph:
     def __init__(self):
@@ -37,7 +18,7 @@ class Graph:
         self.graph[destination].append((source, weight))
 
 
-def dijkstra_origin(graph: Graph, start):
+def dijkstra(graph: Graph, start):
     min_heap = [(0, start)]
     visited = set()
 
@@ -77,25 +58,11 @@ def generate_random_graph(size: int, max_weight: int) -> Graph:
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
-        sys.exit()
-    set_max_runtime(int(sys.argv[2]) * 2)
-    print(sys.argv[1], 'START MAIN TEST')
-    print('BRUTE FORCE TEST UNIT')
+
+    start = time.time()
     for testNumber in range(1, 201):
-        print('CASE :', testNumber)
         graph = generate_random_graph(2 * testNumber, testNumber)
 
-        originResult = dijkstra_origin(graph, 0)
-        try:
-            userResult = dijkstra(graph, 0)
-            print(originResult)
-            print(userResult)
-            if originResult != userResult:
-                print(sys.argv[1], 'ERROR ALGORITHM RESULT')
-                sys.exit()
-        except Exception as e:
-            print(sys.argv[1], 'ERROR USER IMPLEMENTATION', e)
-            sys.exit()
-    print(sys.argv[1], 'FINISH MAIN TEST')
+        dijkstra(graph, 0)
+    end = time.time()
+    print(math.ceil(end - start))

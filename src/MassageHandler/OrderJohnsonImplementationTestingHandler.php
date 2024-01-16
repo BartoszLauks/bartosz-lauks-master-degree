@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\MassageHandler;
 
+use App\Entity\ComputationalComplexity;
 use App\Entity\Test;
 use App\Enum\OutputFlags;
 use App\Massage\JohnsonImplementationTesting;
+use App\Repository\ComputationalComplexityRepository;
 use App\Repository\TestRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -18,7 +20,8 @@ readonly class OrderJohnsonImplementationTestingHandler
     public function __construct(
         private readonly TestRepository $testRepository,
         private readonly Filesystem $filesystem,
-        private readonly ParameterBagInterface $parameterBag
+        private readonly ParameterBagInterface $parameterBag,
+        private readonly ComputationalComplexityRepository $complexityRepository
     ) {
     }
 
@@ -32,8 +35,10 @@ readonly class OrderJohnsonImplementationTestingHandler
         if ($this->isTestDone($test)) {
             $testPath = sprintf('%s%s', $this->parameterBag->get('uploads_dir_Johnson'), $test->getUuid());
 
-            if ($this->runMainTest($testPath, $test)) {
-                if ($this->runComplexityTest($testPath, $test)) {
+            $complexity = $this->getComputationalComplexity($test);
+
+            if ($this->runMainTest($testPath, $test, $complexity)) {
+                if ($this->runComplexityTest($testPath, $test, $complexity)) {
                     $test->setStatus(Test::STATUS['VERIFIED']);
                     $test->setResponse('Testing completed successfully.');
                 }
@@ -105,9 +110,10 @@ readonly class OrderJohnsonImplementationTestingHandler
     {
         return $test->getStatus() !== Test::STATUS['VERIFIED'] && $test->getStatus() !== Test::STATUS['ERROR'];
     }
-    private function runMainTest(string $testPath, Test $test): bool
+    private function runMainTest(string $testPath, Test $test, ComputationalComplexity $complexity): bool
     {
-        exec(sprintf('python %s/main.py %s > %s/output.txt', $testPath, $test->getToken(), $testPath));
+        exec(sprintf('python %s/main.py %s %s > %s/output.txt',
+            $testPath, $test->getToken(), $complexity->getTimeComplexity(), $testPath));
         $mainTestPath = $this->getOutputTestPath($testPath);
 
         if ($this->checkOutputTestFileExist($testPath, $test)) {
@@ -120,10 +126,10 @@ readonly class OrderJohnsonImplementationTestingHandler
         return true;
     }
 
-    private function runComplexityTest(string $testPath, Test $test): bool
+    private function runComplexityTest(string $testPath, Test $test, ComputationalComplexity $complexity): bool
     {
-        exec(sprintf('python %s/computationalComplexityMain.py %s >> %s/output.txt',
-            $testPath, $test->getToken(), $testPath));
+        exec(sprintf('python %s/computationalComplexityMain.py %s %s %s >> %s/output.txt',
+            $testPath, $test->getToken(), $complexity->getTimeComplexity(), $complexity->getMemoryComplexity(), $testPath));
         $mainTestPath = $this->getOutputTestPath($testPath);
 
         if ($this->checkOutputTestFileExist($testPath, $test)) {
@@ -140,5 +146,33 @@ readonly class OrderJohnsonImplementationTestingHandler
         }
 
         return true;
+    }
+
+    private function getComputationalComplexity(Test $test) : ComputationalComplexity
+    {
+        $complexity = $this->complexityRepository->findOneBy([
+            'algorithm' => $test->getAlgorithm(),
+            'language' => $test->getLanguage()
+        ]);
+
+        if (!$complexity) {
+            $complexityPath = sprintf('%s%s', $this->parameterBag->get('algorithms_dir_Johnson'), 'computationalComplexity');
+
+            $complexity = new ComputationalComplexity();
+            $complexity->setAlgorithm($test->getAlgorithm());
+            $complexity->setLanguage($test->getLanguage());
+            $complexity->setMemoryComplexity(intval(exec(sprintf('python %s/memoryComplexity.py', $complexityPath))));
+
+            $times = [];
+            for ($i = 0; $i <= 10; $i++) {
+                $times[] = floatval(exec(sprintf('python %s/timeComplexity.py', $complexityPath)));
+            }
+
+            $complexity->setTimeComplexity(round(array_sum($times) / count($times)));
+
+            $this->complexityRepository->save($complexity);
+        }
+
+        return $complexity;
     }
 }

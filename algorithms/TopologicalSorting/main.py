@@ -52,10 +52,13 @@ def topological_sort_original(graph: Graph) -> []:
 
 
 if __name__ == '__main__':
-    set_max_runtime(2)
+    if len(sys.argv) < 3:
+        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
+        sys.exit()
+    set_max_runtime(int(sys.argv[2]) * 2)
     print(sys.argv[1], 'START MAIN TEST')
     print('BRUTE FORCE TEST UNIT')
-    for testNumber in range(1, 51):
+    for testNumber in range(1, 501):
         print('CASE :', testNumber)
         graphLenNode = testNumber * 10
         graph = Graph()
@@ -63,7 +66,6 @@ if __name__ == '__main__':
         for createGraph in range(1, graphLenNode):
             graph.add_edge(random.randint(0, 10 * testNumber), random.randint(0, 10 * testNumber))
 
-        print(graph.graph)
         originResult = topological_sort_original(graph)
         try:
             userResult = topological_sort(graph)

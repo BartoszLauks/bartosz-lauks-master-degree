@@ -1,8 +1,6 @@
 import random
 import time
 import math
-from collections import deque
-
 
 class Graph:
     def __init__(self):
@@ -14,16 +12,14 @@ class Graph:
         self.graph[u].append(v)
 
 
-def bfs(graph: Graph, start: int) -> []:
-    visited = []
-    queue = deque([start])
+def dfs(graph: Graph, start: int, visited=None) -> []:
+    if visited is None:
+        visited = []
+    visited.append(start)
 
-    while queue:
-        current_node = queue.popleft()
-
-        if current_node not in visited:
-            visited.append(current_node)
-            queue.extend(neighbor for neighbor in graph.graph.get(current_node, []) if neighbor not in visited)
+    for neighbor in graph.graph.get(start, []):
+        if neighbor not in visited:
+            dfs(graph, neighbor, visited)
 
     return visited
 
@@ -31,13 +27,13 @@ def bfs(graph: Graph, start: int) -> []:
 if __name__ == '__main__':
 
     start = time.time()
-    for test in range(1, 500):
-        graphLenNode = test * 10
+    for testNumber in range(1, 501):
+        graphLenNode = testNumber * 10
         graph = Graph()
 
         for createGraph in range(1, graphLenNode):
             graph.add_edge(random.randint(0, 100), random.randint(0, 100))
 
-        bfs(graph, 0)
+        dfs(graph, 0)
     end = time.time()
     print(math.ceil(end - start))

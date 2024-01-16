@@ -1,24 +1,6 @@
 import random
-import resource
-import signal
-import sys
-
-try:
-    from userBellmanFord import bellman_ford
-except Exception as e:
-    print(sys.argv[1], 'ERROR IMPORT')
-    sys.exit()
-
-
-def time_exceeded(signo, frame):
-    print(sys.argv[1], 'ERROR TIME OUT')
-    sys.exit(1)
-
-
-def set_max_runtime(seconds):
-    soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-    resource.setrlimit(resource.RLIMIT_CPU, (seconds, hard))
-    signal.signal(signal.SIGXCPU, time_exceeded)
+import time
+import math
 
 
 class Graph:
@@ -32,11 +14,9 @@ class Graph:
 
 
 def bellman_ford_origin(graph: Graph, start_vertex: int) -> {}:
-    # Step 1: Initialize distances
     distances = {vertex: float('infinity') for vertex in graph.graph}
     distances[start_vertex] = 0
 
-    # Step 2: Relax graph repeatedly
     for _ in range(len(graph.graph) - 1):
         for current_vertex in graph.graph:
             if current_vertex in distances:
@@ -44,7 +24,6 @@ def bellman_ford_origin(graph: Graph, start_vertex: int) -> {}:
                     if distances[current_vertex] + weight < distances.get(neighbor, float('infinity')):
                         distances[neighbor] = distances[current_vertex] + weight
 
-    # Step 3: Check for negative cycles
     for current_vertex in graph.graph:
         if current_vertex in distances:
             for neighbor, weight in graph.graph[current_vertex]:
@@ -67,26 +46,11 @@ def generate_random_graph(size, min_weight, max_weight):
     return graph
 
 
-# Example usage:
 if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
-        sys.exit()
-    set_max_runtime(int(sys.argv[2]) * 2)
-    print(sys.argv[1], 'START MAIN TEST')
-    print('BRUTE FORCE TEST UNIT')
+
+    start = time.time()
     for testNumber in range(1, 31):
-        print('CASE :', testNumber)
         graph = generate_random_graph(5 * testNumber, testNumber * 5, testNumber * 5)
-        originResult = bellman_ford_origin(graph, list(graph.graph.keys())[0])
-        try:
-            userResult = bellman_ford(graph, list(graph.graph.keys())[0])
-            print(originResult)
-            print(userResult)
-            if originResult != userResult:
-                print(sys.argv[1], 'ERROR ALGORITHM RESULT')
-                sys.exit()
-        except Exception as e:
-            print(sys.argv[1], 'ERROR USER IMPLEMENTATION', e)
-            sys.exit()
-    print(sys.argv[1], 'FINISH MAIN TEST')
+        bellman_ford_origin(graph, list(graph.graph.keys())[0])
+    end = time.time()
+    print(math.ceil(end - start))

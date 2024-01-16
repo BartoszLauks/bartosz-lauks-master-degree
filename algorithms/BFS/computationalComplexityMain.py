@@ -113,6 +113,7 @@ class Graph:
 if __name__ == '__main__':
     if len(sys.argv) < 4:
         print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
+        sys.exit()
     set_max_runtime(int(sys.argv[2]))
     print(sys.argv[1], 'START COMPUTATIONAL COMPLEXITY TEST')
     PEEK_MEMORY = int(sys.argv[3])

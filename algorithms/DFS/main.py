@@ -38,22 +38,25 @@ def dfs_origin(graph: Graph, start: int, visited=None) -> []:
 
     for neighbor in graph.graph.get(start, []):
         if neighbor not in visited:
-            dfs(graph, neighbor, visited)
+            dfs_origin(graph, neighbor, visited)
 
     return visited
 
 
 if __name__ == '__main__':
-    set_max_runtime(2)
+    if len(sys.argv) < 3:
+        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
+        sys.exit()
+    set_max_runtime(int(sys.argv[2]) * 2)
     print(sys.argv[1], 'START MAIN TEST')
     print('BRUTE FORCE TEST UNIT')
-    for testNumber in range(1, 101):
+    for testNumber in range(1, 501):
         print('CASE :', testNumber)
         graphLenNode = testNumber * 10
         graph = Graph()
 
         for createGraph in range(1, graphLenNode):
-            graph.add_edge(random.randint(0, 10 * testNumber), random.randint(0, 10 * testNumber))
+            graph.add_edge(random.randint(0, 100), random.randint(0, 100))
 
         originResult = dfs_origin(graph, 0)
 

@@ -1,20 +1,4 @@
-import resource
-import signal
-import sys
 import tracemalloc
-
-from userFloydWarshall import floyd_warshall
-
-
-def time_exceeded(signo, frame):
-    print(sys.argv[1], 'ERROR TIME OUT')
-    sys.exit(1)
-
-
-def set_max_runtime(seconds):
-    soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-    resource.setrlimit(resource.RLIMIT_CPU, (seconds, hard))
-    signal.signal(signal.SIGXCPU, time_exceeded)
 
 
 class Graph:
@@ -142,21 +126,36 @@ class Graph:
             45: {46: 34, 47: -38, 48: 32, 49: -32}, 46: {47: 21, 48: 4, 49: -31}, 47: {48: -12, 49: 5}, 48: {49: -4}}
 
 
+def floyd_warshall(graph: Graph, start_edge: int) -> {}:
+    dist = {}
+
+    for vertex in graph.graph:
+        if vertex == start_edge:
+            dist[start_edge] = 0
+        elif start_edge in graph.graph and vertex in graph.graph[start_edge]:
+            dist[vertex] = graph.graph[start_edge][vertex]
+        else:
+            dist[vertex] = float('inf')
+
+    for k in graph.graph:
+        for i in graph.graph:
+            for j in graph.graph:
+                if i in graph.graph[k] and j in graph.graph[i]:
+                    if dist[i] != float('inf') and dist[i] + graph.graph[i][j] < dist[j]:
+                        dist[j] = dist[i] + graph.graph[i][j]
+
+    # Set unreachable graph to None
+    for vertex in graph.graph:
+        if dist[vertex] == float('inf'):
+            del dist[vertex]
+
+    return dist
+
+
 if __name__ == '__main__':
-    if len(sys.argv) < 4:
-        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
-        sys.exit()
-    set_max_runtime(int(sys.argv[2]))
-    print(sys.argv[1], 'START COMPUTATIONAL COMPLEXITY TEST')
-    PEEK_MEMORY = int(sys.argv[3])
     graph = Graph()
     tracemalloc.start()
     floyd_warshall(graph, list(graph.graph.keys())[0])
     peekTracedMemory = int(tracemalloc.get_traced_memory()[1])
     tracemalloc.stop()
-
-    print(sys.argv[1], 'PEEK MEMORY USAGE BY YOUR IMPLEMENTATION:', peekTracedMemory)
-    if peekTracedMemory < (PEEK_MEMORY * 2):
-        print(sys.argv[1], 'FINISH COMPUTATIONAL COMPLEXITY TEST')
-    else:
-        print(sys.argv[1], 'ERROR MEMORY LIMIT EXCEEDED')
+    print(peekTracedMemory)
