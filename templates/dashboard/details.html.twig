@@ -74,7 +74,7 @@
                 {% for message in messages %}
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-text">{{ message.body }}</p>
+                            <p class="card-text">{{ message.body|raw }}</p>
                             <p class="card-text"><small class="text-muted">Comment added at : {{ message.createdAt|date("F jS \\a\\t g:ia") }}</small></p>
                             <p class="card-text"><small class="text-muted">By : {{ message.user.name }} {{ message.user.surname }} ({{ message.user.email }})</small>{% if 'ROLE_ADMIN' in message.user.roles %}<small style="color: red"> Administrator</small>{% endif %}</p>
                             {% if message.user == app.user %}

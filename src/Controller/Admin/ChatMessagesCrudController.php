@@ -2,48 +2,46 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Gender;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use App\Entity\ChatMessages;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
-class GenderCrudController extends AbstractCrudController
+class ChatMessagesCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Gender::class;
+        return ChatMessages::class;
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('name'),
+            TextField::new('uuid')->hideOnForm(),
+            TextEditorField::new('body'),
+            AssociationField::new('user'),
+            AssociationField::new('test'),
             DateTimeField::new('updatedAt')->hideOnForm(),
             DateTimeField::new('createdAt')->hideOnForm()
         ];
-    }
-
-    public function configureActions(Actions $actions): Actions
-    {
-        return $actions
-            ->add(Crud::PAGE_INDEX, Action::DETAIL)
-            ;
     }
 
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
             ->add(NumericFilter::new('id'))
-            ->add(TextFilter::new('name'))
+            ->add(TextFilter::new('body'))
+            ->add(EntityFilter::new('user'))
+            ->add(EntityFilter::new('test'))
             ->add(DateTimeFilter::new('updatedAt'))
             ->add(DateTimeFilter::new('createdAt'))
             ;

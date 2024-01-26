@@ -6,6 +6,7 @@ use App\Entity\Test;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
@@ -13,6 +14,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 class TestCrudController extends AbstractCrudController
 {
@@ -30,10 +36,10 @@ class TestCrudController extends AbstractCrudController
             ChoiceField::new('status')
                 ->allowMultipleChoices(false)
                 ->setChoices([
-                'WAITING' => 'WAITING',
-                'CHECKED' => 'CHECKED',
-                'VERIFIED' => 'VERIFIED',
-                'ERROR' => 'ERROR'
+                    'WAITING' => 'WAITING',
+                    'CHECKED' => 'CHECKED',
+                    'VERIFIED' => 'VERIFIED',
+                    'ERROR' => 'ERROR'
                 ]),
             IntegerField::new('result'),
             TextEditorField::new('response'),
@@ -50,6 +56,28 @@ class TestCrudController extends AbstractCrudController
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->remove(Crud::PAGE_INDEX, Action::NEW)
+            ;
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(NumericFilter::new('id'))
+            ->add(TextFilter::new('algorithm'))
+            ->add(TextFilter::new('type'))
+            ->add(ChoiceFilter::new('status')
+                ->setChoices([
+                    'WAITING' => 'WAITING',
+                    'CHECKED' => 'CHECKED',
+                    'VERIFIED' => 'VERIFIED',
+                    'ERROR' => 'ERROR'
+                ]))
+            ->add(NumericFilter::new('result'))
+            ->add(TextFilter::new('response'))
+            ->add(TextFilter::new('language'))
+            ->add(BooleanFilter::new('isVerified'))
+            ->add(DateTimeFilter::new('updatedAt'))
+            ->add(DateTimeFilter::new('createdAt'))
             ;
     }
 }

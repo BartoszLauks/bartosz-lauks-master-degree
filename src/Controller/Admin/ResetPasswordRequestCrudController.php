@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Gender;
+use App\Entity\ResetPasswordRequest;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -15,20 +15,20 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\DateTimeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
-class GenderCrudController extends AbstractCrudController
+class ResetPasswordRequestCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Gender::class;
+        return ResetPasswordRequest::class;
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('name'),
-            DateTimeField::new('updatedAt')->hideOnForm(),
-            DateTimeField::new('createdAt')->hideOnForm()
+            TextField::new('hashedToken'),
+            DateTimeField::new('requestedAt')->hideOnForm(),
+            DateTimeField::new('expiresAt')->hideOnForm()
         ];
     }
 
@@ -36,6 +36,7 @@ class GenderCrudController extends AbstractCrudController
     {
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->remove(Crud::PAGE_INDEX, Action::NEW)
             ;
     }
 
@@ -43,9 +44,9 @@ class GenderCrudController extends AbstractCrudController
     {
         return $filters
             ->add(NumericFilter::new('id'))
-            ->add(TextFilter::new('name'))
-            ->add(DateTimeFilter::new('updatedAt'))
-            ->add(DateTimeFilter::new('createdAt'))
+            ->add(TextFilter::new('hashedToken'))
+            ->add(DateTimeFilter::new('requestedAt'))
+            ->add(DateTimeFilter::new('expiresAt'))
             ;
     }
 }
