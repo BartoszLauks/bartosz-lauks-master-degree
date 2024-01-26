@@ -57,6 +57,10 @@
                     {% endif %}
                 </tr>
                 <tr>
+                    <td>Chart :</td>
+                    <td><img src="{{ path('app_chart', { algorithm : test.algorithm, uuid : test.uuid }) }}" alt="chart"></td>
+                </tr>
+                <tr>
                     <td>Testing output :</td>
                     <td>{{ output|raw }}</td>
                 </tr>

@@ -71,6 +71,8 @@ class PrimController extends AbstractController
                     $this->parameterBag->get('uploads_dir_Prim').$test->getUuid().'/main.py');
                 $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Prim').'computationalComplexityMain.py',
                     $this->parameterBag->get('uploads_dir_Prim').$test->getUuid().'/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Prim').'chart.py',
+                    $this->parameterBag->get('uploads_dir_Prim').$test->getUuid().'/chart.py');
             }
             $this->testRepository->save($test);
 

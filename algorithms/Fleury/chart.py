@@ -1,26 +1,15 @@
 import copy
 import random
-import resource
-import signal
 import sys
+import time
+
+from matplotlib import pyplot as plt
 
 try:
     from userFleury import fleury
 except Exception as e:
-    print(sys.argv[1], 'ERROR IMPORT')
+    print(sys.argv[1], "ERROR IMPORT")
     sys.exit()
-
-
-def time_exceeded(signo, frame):
-    print(sys.argv[1], 'ERROR TIME OUT')
-    sys.exit(1)
-
-
-def set_max_runtime(seconds):
-    soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-    resource.setrlimit(resource.RLIMIT_CPU, (seconds, hard))
-    signal.signal(signal.SIGXCPU, time_exceeded)
-
 
 class Graph:
     def __init__(self):
@@ -86,40 +75,54 @@ def fleury_origin(graph):
     return circuit
 
 
-def generate_random_graph(num_vertices: int, num_edges: int):
-    graph = Graph()
+def generate_border_graph(n):
+    border_graph = Graph()
 
-    for _ in range(num_edges):
-        u = random.randint(0, num_vertices - 1)
-        v = random.randint(0, num_vertices - 1)
-        graph.add_edge(u, v)
+    for i in range(n):
+        for j in range(n):
+            if i == 0 or i == n - 1 or j == 0 or j == n - 1:
+                border_graph.add_edge(i, j)
 
-    return graph
+    return border_graph
+
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
-        sys.exit()
-    set_max_runtime(int(sys.argv[2]) * 3)
-    print(sys.argv[1], 'START MAIN TEST')
-    print('BRUTE FORCE TEST UNIT')
-    for testNumber in range(1, 501):
-        print('CASE :', testNumber)
-        graph = generate_random_graph(testNumber, testNumber)
+    x = []
+    t1 = []
+    t2 = []
+    i = 0
+    for testNumber in range(2, 17):
+        i += 1
+        #print(i)
+        graphLenNode = testNumber ** 2
+        #print(graphLenNode)
+        # #print(graphLenNode)
+        x.append(graphLenNode)
+        graph = generate_border_graph(graphLenNode)
         graph2 = copy.deepcopy(graph)
-        try:
-            originResult = fleury_origin(graph)
-        except Exception as e:
-            continue
-        try:
-            userResult = fleury(graph2)
-            print(originResult)
-            print(userResult)
-            if originResult != userResult:
-                print(sys.argv[1], 'ERROR ALGORITHM RESULT')
-                sys.exit()
-        except Exception as e:
-            print(sys.argv[1], 'ERROR USER IMPLEMENTATION', e)
-            sys.exit()
-    print(sys.argv[1], 'FINISH MAIN TEST')
+
+        start = time.time()
+        # #print(graph.graph)
+        fleury_origin(graph)
+        #print('origin: ', float((time.time() - start)))
+        t1.append(float(time.time() - start))
+
+        start = time.time()
+        fleury(graph2)
+        #print('Fleury: ', time.time() - start)
+        t2.append(time.time() - start)
+
+    #print(x)
+    #print(t1)
+    #print(t2)
+    plt.plot(x, t1, label='Server Implementation')
+    plt.plot(x, t2, '-.', label='User implementation')
+
+    plt.xlabel("Graph size")
+    plt.ylabel("Time (float)")
+    plt.grid()
+    plt.legend()
+    plt.title('Fleury Algorithm')
+    #plt.show()
+    plt.savefig('chart.png')

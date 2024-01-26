@@ -67,8 +67,12 @@ class FloydWarshallController extends AbstractController
                 }
 
                 $file->move($this->parameterBag->get('uploads_dir_FloydWarshall').$test->getUuid(), 'userFloydWarshall.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_FloydWarshall').'main.py', $this->parameterBag->get('uploads_dir_FloydWarshall').$test->getUuid().'/main.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_FloydWarshall').'computationalComplexityMain.py', $this->parameterBag->get('uploads_dir_FloydWarshall').$test->getUuid().'/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_FloydWarshall').'main.py',
+                    $this->parameterBag->get('uploads_dir_FloydWarshall').$test->getUuid().'/main.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_FloydWarshall').'computationalComplexityMain.py',
+                    $this->parameterBag->get('uploads_dir_FloydWarshall').$test->getUuid().'/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_FloydWarshall').'chart.py',
+                    $this->parameterBag->get('uploads_dir_FloydWarshall').$test->getUuid().'/chart.py');
             }
             $this->testRepository->save($test);
 

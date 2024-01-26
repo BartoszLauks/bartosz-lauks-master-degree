@@ -67,8 +67,12 @@ class BellmanFordController extends AbstractController
                 }
 
                 $file->move($this->parameterBag->get('uploads_dir_BellmanFord').$test->getUuid(), 'userBellmanFord.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BellmanFord').'main.py', $this->parameterBag->get('uploads_dir_BellmanFord').$test->getUuid().'/main.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BellmanFord').'computationalComplexityMain.py', $this->parameterBag->get('uploads_dir_BellmanFord').$test->getUuid().'/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BellmanFord').'main.py',
+                    $this->parameterBag->get('uploads_dir_BellmanFord').$test->getUuid().'/main.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BellmanFord').'computationalComplexityMain.py',
+                    $this->parameterBag->get('uploads_dir_BellmanFord').$test->getUuid().'/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BellmanFord').'chart.py',
+                    $this->parameterBag->get('uploads_dir_BellmanFord').$test->getUuid().'/chart.py');
             }
             $this->testRepository->save($test);
 

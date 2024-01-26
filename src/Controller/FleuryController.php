@@ -67,8 +67,12 @@ class FleuryController extends AbstractController
                 }
 
                 $file->move($this->parameterBag->get('uploads_dir_Fleury') . $test->getUuid(), 'userFleury.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Fleury') . 'main.py', $this->parameterBag->get('uploads_dir_Fleury') . $test->getUuid() . '/main.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Fleury') . 'computationalComplexityMain.py', $this->parameterBag->get('uploads_dir_Fleury') . $test->getUuid() . '/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Fleury') . 'main.py',
+                    $this->parameterBag->get('uploads_dir_Fleury') . $test->getUuid() . '/main.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Fleury') . 'computationalComplexityMain.py',
+                    $this->parameterBag->get('uploads_dir_Fleury') . $test->getUuid() . '/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Fleury') . 'chart.py',
+                    $this->parameterBag->get('uploads_dir_Fleury') . $test->getUuid() . '/chart.py');
             }
             $this->testRepository->save($test);
 

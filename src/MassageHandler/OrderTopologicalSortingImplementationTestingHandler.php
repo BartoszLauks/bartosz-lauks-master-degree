@@ -39,8 +39,10 @@ readonly class OrderTopologicalSortingImplementationTestingHandler
 
             if ($this->runMainTest($testPath, $test, $complexity)) {
                 if ($this->runComplexityTest($testPath, $test, $complexity)) {
-                    $test->setStatus(Test::STATUS['VERIFIED']);
-                    $test->setResponse('Testing completed successfully.');
+                    if ($this->runChartTest($testPath, $test)) {
+                        $test->setStatus(Test::STATUS['VERIFIED']);
+                        $test->setResponse('Testing completed successfully.');
+                    }
                 }
             }
 
@@ -174,5 +176,19 @@ readonly class OrderTopologicalSortingImplementationTestingHandler
         }
 
         return $complexity;
+    }
+
+    private function runChartTest(string $testPath, Test $test): bool
+    {
+        exec(sprintf('cd %s; python chart.py', $testPath));
+
+        if (!$this->filesystem->exists(sprintf('%s%s', $testPath, '/chart.png'))) {
+            $test->setStatus('ERROR');
+            $test->setResponse('An error occurred while creating the chart.');
+
+            return false;
+        }
+
+        return true;
     }
 }

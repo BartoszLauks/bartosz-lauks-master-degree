@@ -71,6 +71,8 @@ class KruskalController extends AbstractController
                     $this->parameterBag->get('uploads_dir_Kruskal').$test->getUuid().'/main.py');
                 $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Kruskal').'computationalComplexityMain.py',
                     $this->parameterBag->get('uploads_dir_Kruskal').$test->getUuid().'/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Kruskal').'chart.py',
+                    $this->parameterBag->get('uploads_dir_Kruskal').$test->getUuid().'/chart.py');
             }
             $this->testRepository->save($test);
 

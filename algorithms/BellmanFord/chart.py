@@ -1,25 +1,14 @@
 import random
-import resource
-import signal
 import sys
+import time
+
+from matplotlib import pyplot as plt
 
 try:
     from userBellmanFord import bellman_ford
 except Exception as e:
-    print(sys.argv[1], 'ERROR IMPORT')
+    print(sys.argv[1], "ERROR IMPORT")
     sys.exit()
-
-
-def time_exceeded(signo, frame):
-    print(sys.argv[1], 'ERROR TIME OUT')
-    sys.exit(1)
-
-
-def set_max_runtime(seconds):
-    soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
-    resource.setrlimit(resource.RLIMIT_CPU, (seconds, hard))
-    signal.signal(signal.SIGXCPU, time_exceeded)
-
 
 class Graph:
     def __init__(self):
@@ -67,26 +56,40 @@ def generate_random_graph(size, min_weight, max_weight):
     return graph
 
 
-# Example usage:
 if __name__ == '__main__':
-    if len(sys.argv) < 3:
-        print(sys.argv[1], 'ERROR NO PARAMETERS IN THE CALL')
-        sys.exit()
-    set_max_runtime(int(sys.argv[2]) * 3)
-    print(sys.argv[1], 'START MAIN TEST')
-    print('BRUTE FORCE TEST UNIT')
-    for testNumber in range(1, 31):
-        print('CASE :', testNumber)
-        graph = generate_random_graph(5 * testNumber, testNumber * 5, testNumber * 5)
-        originResult = bellman_ford_origin(graph, list(graph.graph.keys())[0])
-        try:
-            userResult = bellman_ford(graph, list(graph.graph.keys())[0])
-            print(originResult)
-            print(userResult)
-            if originResult != userResult:
-                print(sys.argv[1], 'ERROR ALGORITHM RESULT')
-                sys.exit()
-        except Exception as e:
-            print(sys.argv[1], 'ERROR USER IMPLEMENTATION', e)
-            sys.exit()
-    print(sys.argv[1], 'FINISH MAIN TEST')
+    x = []
+    t1 = []
+    t2 = []
+    #i = 0
+    for testNumber in range(1, 23):
+        #i += 1
+        #print(i)
+        graphLenNode = testNumber ** 2 + 1
+        #print(graphLenNode)
+        x.append(graphLenNode)
+        graph = generate_random_graph(graphLenNode, 0, graphLenNode)
+
+        start = time.time()
+        # #print(graph.graph)
+        bellman_ford_origin(graph, list(graph.graph.keys())[0])
+        #print('origin: ', float((time.time() - start)))
+        t1.append(float(time.time() - start))
+
+        start = time.time()
+        bellman_ford(graph, list(graph.graph.keys())[0])
+        #print('Topological sorting: ', time.time() - start)
+        t2.append(time.time() - start)
+
+    #print(x)
+    #print(t1)
+    #print(t2)
+    plt.plot(x, t1, label='Server Implementation')
+    plt.plot(x, t2, '-.', label='User implementation')
+
+    plt.xlabel("Graph size")
+    plt.ylabel("Time (float)")
+    plt.grid()
+    plt.legend()
+    plt.title('Bellman Ford Algorithm')
+    #plt.show()
+    plt.savefig('chart.png')

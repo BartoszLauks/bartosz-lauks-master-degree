@@ -66,8 +66,12 @@ class JohnsonController extends AbstractController
                 }
 
                 $file->move($this->parameterBag->get('uploads_dir_Johnson').$test->getUuid(), 'userJohnson.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Johnson').'main.py', $this->parameterBag->get('uploads_dir_Johnson').$test->getUuid().'/main.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Johnson').'computationalComplexityMain.py', $this->parameterBag->get('uploads_dir_Johnson').$test->getUuid().'/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Johnson').'main.py',
+                    $this->parameterBag->get('uploads_dir_Johnson').$test->getUuid().'/main.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Johnson').'computationalComplexityMain.py',
+                    $this->parameterBag->get('uploads_dir_Johnson').$test->getUuid().'/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Johnson').'chart.py',
+                    $this->parameterBag->get('uploads_dir_Johnson').$test->getUuid().'/chart.py');
             }
             $this->testRepository->save($test);
 

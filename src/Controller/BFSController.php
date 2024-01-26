@@ -71,8 +71,12 @@ class BFSController extends AbstractController
                 }
 
                 $file->move($this->parameterBag->get('uploads_dir_BFS').$test->getUuid(), 'userBFS.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BFS').'main.py', $this->parameterBag->get('uploads_dir_BFS').$test->getUuid().'/main.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BFS').'computationalComplexityMain.py', $this->parameterBag->get('uploads_dir_BFS').$test->getUuid().'/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BFS').'main.py',
+                    $this->parameterBag->get('uploads_dir_BFS').$test->getUuid().'/main.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BFS').'computationalComplexityMain.py',
+                    $this->parameterBag->get('uploads_dir_BFS').$test->getUuid().'/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_BFS').'chart.py',
+                    $this->parameterBag->get('uploads_dir_BFS').$test->getUuid().'/chart.py');
             }
             $this->testRepository->save($test);
 

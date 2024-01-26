@@ -72,6 +72,8 @@ class TopologicalSortingController extends AbstractController
                     $this->parameterBag->get('uploads_dir_TopologicalSorting') . $test->getUuid() . '/main.py');
                 $this->filesystem->copy($this->parameterBag->get('algorithms_dir_TopologicalSorting') . 'computationalComplexityMain.py',
                     $this->parameterBag->get('uploads_dir_TopologicalSorting') . $test->getUuid() . '/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_TopologicalSorting') . 'chart.py',
+                    $this->parameterBag->get('uploads_dir_TopologicalSorting') . $test->getUuid() . '/chart.py');
             }
             $this->testRepository->save($test);
 

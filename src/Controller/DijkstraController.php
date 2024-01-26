@@ -67,8 +67,12 @@ class DijkstraController extends AbstractController
                 }
 
                 $file->move($this->parameterBag->get('uploads_dir_Dijkstra').$test->getUuid(), 'userDijkstra.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Dijkstra').'main.py', $this->parameterBag->get('uploads_dir_Dijkstra').$test->getUuid().'/main.py');
-                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Dijkstra').'computationalComplexityMain.py', $this->parameterBag->get('uploads_dir_Dijkstra').$test->getUuid().'/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Dijkstra').'main.py',
+                    $this->parameterBag->get('uploads_dir_Dijkstra').$test->getUuid().'/main.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Dijkstra').'computationalComplexityMain.py',
+                    $this->parameterBag->get('uploads_dir_Dijkstra').$test->getUuid().'/computationalComplexityMain.py');
+                $this->filesystem->copy($this->parameterBag->get('algorithms_dir_Dijkstra').'chart.py',
+                    $this->parameterBag->get('uploads_dir_Dijkstra').$test->getUuid().'/chart.py');
             }
             $this->testRepository->save($test);
 
