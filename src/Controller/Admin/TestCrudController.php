@@ -75,7 +75,6 @@ class TestCrudController extends AbstractCrudController
             ->add(NumericFilter::new('result'))
             ->add(TextFilter::new('response'))
             ->add(TextFilter::new('language'))
-            ->add(BooleanFilter::new('isVerified'))
             ->add(DateTimeFilter::new('updatedAt'))
             ->add(DateTimeFilter::new('createdAt'))
             ;
