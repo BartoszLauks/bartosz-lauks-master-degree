@@ -10,6 +10,8 @@ COMPOSER_ALLOW_SUPERUSER=1 docker-compose exec -T bartosz-lauks-master-degree-ph
 docker-compose exec -T bartosz-lauks-master-degree-php php bin/console doctrine:database:create --if-not-exists
 docker-compose exec -T bartosz-lauks-master-degree-php php bin/console doctrine:migrations:migrate --no-interaction
 
+docker-compose exec -T bartosz-lauks-master-degree-php chmod 777 -R implementations/
+
 #JWT
 #rm ./config/jwt/*
 #openssl genrsa -out ./config/jwt/private.pem -passout pass:"1234" -aes256 4096

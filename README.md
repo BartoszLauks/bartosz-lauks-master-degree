@@ -36,6 +36,12 @@ $ make install
 ```
 cat backup.sql | docker exec -i bartosz-lauks-master-degree-mysql-dev /usr/bin/mysql -u root bartosz-lauks-master-degree_dev
 ```
+
+**Uruchomienia konsumenta wiadomości**
+```
+make start_queued_message_handling
+```
+
 **Lista użytkowników w tym backup i ich hasła**
 - bartosz.lauks@interia.pl hasło : 123123 -> User
 - cruzonek@gmail.com hasło : 123123 -> Super User

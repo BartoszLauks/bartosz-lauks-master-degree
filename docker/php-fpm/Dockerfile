@@ -43,11 +43,18 @@ RUN "date"
 
 CMD crond -b && rsyslogd && php-fpm
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+#CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
 
 # Install python/pip
+#ENV PYTHONUNBUFFERED=1
+#RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
+#RUN python3 -m ensurepip
+#RUN pip3 install --no-cache --upgrade pip setuptools
+#RUN pip3 install matplotlib
+
 ENV PYTHONUNBUFFERED=1
 RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
-RUN python3 -m ensurepip
-RUN pip3 install --no-cache --upgrade pip setuptools
-RUN pip3 install matplotlib
+RUN apk add py3-pip
+# RUN python -m ensurepip
+# RUN pip3 install --no-cache --upgrade pip3 setuptools
+RUN pip3 install matplotlib --break-system-packages
