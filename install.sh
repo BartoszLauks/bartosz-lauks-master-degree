@@ -8,7 +8,7 @@ COMPOSER_ALLOW_SUPERUSER=1 docker-compose exec -T bartosz-lauks-master-degree-ph
 COMPOSER_ALLOW_SUPERUSER=1 docker-compose exec -T bartosz-lauks-master-degree-php composer update --no-interaction --classmap-authoritative --optimize-autoloader
 
 docker-compose exec -T bartosz-lauks-master-degree-php php bin/console doctrine:database:create --if-not-exists
-#docker-compose exec -T bartosz-lauks-master-degree-php php bin/console doctrine:migrations:migrate --no-interaction
+docker-compose exec -T bartosz-lauks-master-degree-php php bin/console doctrine:migrations:migrate --no-interaction
 
 #JWT
 #rm ./config/jwt/*

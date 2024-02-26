@@ -1,0 +1,24 @@
+{% extends 'Header.html.twig' %}
+
+{% block title %}
+    DFS Algorithm
+{% endblock %}
+
+{% block body %}
+    <h1>Algorytm DFS (Depth-First Search) </h1>
+    <ol>
+        <li><strong>Wybór wierzchołka startowego:</strong> Wybierz wierzchołek startowy jako punkt początkowy przeszukiwania. Oznacz go jako odwiedzony.</li>
+        <li><strong>Przetwarzanie wierzchołka:</strong> Wykonaj operacje na wierzchołku, który obecnie przetwarzasz. To może być wyświetlanie wartości, zapisywanie danych czy inne działania związane z problemem.</li>
+        <li><strong>Przeszukiwanie sąsiadów:</strong> Przeszukaj wszystkich sąsiadów obecnego wierzchołka, którzy nie zostali jeszcze odwiedzeni. Wybierz jednego z nich i przejdź do kroku 4.</li>
+        <li><strong>Rekurencyjne wywołanie DFS:</strong> Wywołaj algorytm DFS rekurencyjnie dla wybranego sąsiada. Powtarzaj ten krok, aż do momentu odwiedzenia wszystkich dostępnych wierzchołków.</li>
+        <li><strong>Powrót:</strong> Jeśli nie ma już dostępnych sąsiadów do odwiedzenia, wróć do poprzedniego wierzchołka, gdzie są jeszcze nieodwiedzeni sąsiedzi. Powtarzaj ten krok, aż wrócisz do początkowego wierzchołka.</li>
+        <li><strong>Zakończenie:</strong> Algorytm kończy się, gdy wszystkie wierzchołki grafu zostaną odwiedzone.</li>
+    </ol>
+    <p>Ważne jest zaznaczenie, że w przypadku niektórych implementacji algorytmu DFS może być konieczne dodanie dodatkowych kroków, takich jak sprawdzanie, czy dany wierzchołek został już odwiedzony, aby uniknąć cykli w grafie. Algorytm DFS może być używany do różnych celów, takich jak znajdowanie ścieżek w grafie, sprawdzanie spójności grafu, czy też rozwiązywanie problemów związanych z drzewami i grafami.</p>
+
+    <div id="mid-container">
+        <a href="{{ path('app_dfs_algorithm_create') }}">
+            <button class="btn btn-primary">Task</button>
+        </a>
+    </div>
+{% endblock %}

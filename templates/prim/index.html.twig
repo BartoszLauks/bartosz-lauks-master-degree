@@ -1,0 +1,39 @@
+{% extends 'Header.html.twig' %}
+
+{% block title %}
+    Prim Algorithm
+{% endblock %}
+
+{% block body %}
+    <h1>Algorytm Prima</h1>
+
+    <p>Algorytm Prima to algorytm służący do znajdowania minimalnego drzewa rozpinającego w spójnym, nieskierowanym grafie ważonym. Minimalne drzewo rozpinające to taki podgraf grafu pierwotnego, który zawiera wszystkie wierzchołki oryginalnego grafu, jest drzewem (bez cykli), i suma wag krawędzi tego drzewa jest minimalna.</p>
+    <ol>
+        <li><strong>Inicjalizacja:</strong>
+            <ul>
+                <li>Wybierz dowolny wierzchołek startowy.</li>
+                <li>Ustaw zbiór MST (minimalnego drzewa rozpinającego) na pusty.</li>
+            </ul>
+        </li>
+
+        <li><strong>Powtarzaj kroki poniżej, dopóki MST nie zawiera wszystkich wierzchołków:</strong>
+            <ul>
+                <li>Dla każdej krawędzi wychodzącej z aktualnego MST, znajdź krawędź o najmniejszej wadze, która łączy wierzchołek w MST z wierzchołkiem spoza MST.</li>
+                <li>Dodaj tę znalezioną krawędź o najmniejszej wadze do MST.</li>
+            </ul>
+        </li>
+
+        <li><strong>Zakończenie:</strong>
+            <ul>
+                <li>Algorytm kończy się, gdy MST zawiera wszystkie wierzchołki grafu.</li>
+            </ul>
+        </li>
+    </ol>
+    <p>Algorytm Prima jest egoistyczny, co oznacza, że podejmuje lokalnie optymalne decyzje, aby osiągnąć globalnie optymalne rozwiązanie. W każdym kroku algorytmu Prima wybiera krawędź o najmniejszej wadze, która łączy wierzchołki w MST z wierzchołkiem spoza MST, co prowadzi do minimalnego drzewa rozpinającego o minimalnej sumie wag krawędzi. Algorytm ten jest efektywny zwłaszcza dla gęstych grafów.</p>
+
+    <div id="mid-container">
+        <a href="{{ path('app_prim_algorithm_create') }}">
+            <button class="btn btn-primary">Task</button>
+        </a>
+    </div>
+{% endblock %}

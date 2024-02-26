@@ -1,0 +1,26 @@
+{% extends 'Header.html.twig' %}
+
+{% block title %}
+    Topological Sorting Algorithm
+{% endblock %}
+
+{% block body %}
+    <h1>Algorytm Sortowania Topologicznego</h1>
+
+    <p>Topological Sorting is a way to order the vertices in a directed acyclic graph (DAG) such that for every directed edge (u, v), vertex u comes before vertex v in the topological order.</p>
+
+    <ol>
+        <li><strong>Inicjalizacja:</strong> Znajdź wszystkie wierzchołki bez wejściowych krawędzi.</li>
+        <li><strong>Wybór wierzchołka:</strong> Wybierz wierzchołek z punktu 1 i dodaj go do listy porządkowej. Usuń krawędzie wychodzące z tego wierzchołka.</li>
+        <li><strong>Aktualizacja stopni wejściowych:</strong> Po usunięciu krawędzi z wierzchołka, zaktualizuj stopnie wejściowe dla jego sąsiadów.</li>
+        <li><strong>Powtórz:</strong> Powtarzaj kroki 2 i 3, aż wszystkie wierzchołki zostaną dodane do listy porządkowej.</li>
+    </ol>
+
+    <p>Jeśli żaden wierzchołek nie został dodany do listy porządkowej, to oznacza, że graf zawiera cykl, a porządek topologiczny nie jest możliwy.</p>
+
+    <div id="mid-container">
+        <a href="{{ path('app_topological_sorting_algorithm_create') }}">
+            <button class="btn btn-primary">Task</button>
+        </a>
+    </div>
+{% endblock %}

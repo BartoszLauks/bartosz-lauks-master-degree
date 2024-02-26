@@ -17,3 +17,12 @@ services:
     container_name: bartosz-lauks-master-degree-nginx-dev
     ports:
       - '8083:80'
+
+  bartosz-lauks-master-degree-rabbitmq:
+    container_name: bartosz-lauks-master-degree-rabbitmq-dev
+    environment:
+      RABBITMQ_DEFAULT_USER: broker
+      RABBITMQ_DEFAULT_PASS: admin
+    ports:
+      - '5672:5672'
+      - '15672:15672'

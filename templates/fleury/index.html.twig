@@ -1,0 +1,30 @@
+{% extends 'Header.html.twig' %}
+
+{% block title %}
+    Fleury Algorithm
+{% endblock %}
+
+{% block body %}
+    <h2>Algorytm Fleury</h2>
+
+    <p>Algorytm Fleury to algorytm służący do znalezienia Euleryjskiego cyklu w grafie, czyli takiego cyklu, który przechodzi przez każdą krawędź grafu dokładnie raz. Algorytm ten został nazwany od nazwiska szwajcarskiego matematyka i inżyniera Gustava Fleury'ego.</p>
+    <ol>
+        <li><strong>Sprawdzenie stopni wierzchołków:</strong> Upewnij się, że graf jest spójny (wszystkie wierzchołki są połączone) i że wszystkie stopnie wierzchołków są parzyste, z wyjątkiem co najwyżej dwóch wierzchołków, które mogą mieć stopień nieparzysty.</li>
+        <li><strong>Wybór startowego wierzchołka:</strong> Wybierz dowolny wierzchołek grafu jako punkt początkowy.</li>
+        <li><strong>Inicjalizacja pustej ścieżki lub cyklu:</strong> Stwórz pustą ścieżkę lub cykl, który będzie reprezentował Euleryjski cykl.</li>
+        <li><strong>Rozpoczęcie przeszukiwania:</strong> Rozpocznij przeszukiwanie grafu, przechodząc przez dostępne krawędzie.</li>
+        <li><strong>Wybór krawędzi:</strong> Jeśli w bieżącym wierzchołku istnieje więcej niż jedna krawędź, wybierz dowolną krawędź, której usunięcie nie spowoduje rozspójnienia grafu. W przeciwnym razie wybierz jedyną dostępną krawędź.</li>
+        <li><strong>Usunięcie krawędzi:</strong> Usuń wybraną krawędź z grafu.</li>
+        <li><strong>Dodanie krawędzi do ścieżki/cyklu:</strong> Dodaj wybraną krawędź do ścieżki lub cyklu.</li>
+        <li><strong>Powrót do punktu 5:</strong> Powtarzaj kroki 5-7, dopóki istnieją dostępne krawędzie w bieżącym wierzchołku.</li>
+        <li><strong>Zakończenie:</strong> Gdy nie ma już dostępnych krawędzi w bieżącym wierzchołku, sprawdź, czy wszystkie krawędzie grafu zostały odwiedzone. Jeśli tak, to ścieżka/cykl Eulera został znaleziony. W przeciwnym razie wybierz inny nieodwiedzony wierzchołek jako nowy punkt początkowy i powtórz kroki 3-8.</li>
+    </ol>
+    <p>Algorytm kończy się, gdy wszystkie krawędzie zostaną odwiedzone i ścieżka/cykl Eulera zostanie zbudowany. Algorytm może również zakończyć się, gdy nie ma dostępnych krawędzi w bieżącym wierzchołku i nie wszystkie krawędzie zostały odwiedzone, co oznacza, że graf nie ma Euleryjskiego cyklu.</p>
+    <p>Warto zauważyć, że algorytm Fleury może być modyfikowany, aby działał także dla grafów skierowanych. Algorytm ten jest efektywny dla grafów, w których większość wierzchołków ma parzyste stopnie, co jest warunkiem koniecznym dla istnienia Euleryjskiego cyklu lub ścieżki.</p>
+
+    <div id="mid-container">
+        <a href="{{ path('app_fleury_algorithm_create') }}">
+            <button class="btn btn-primary">Task</button>
+        </a>
+    </div>
+{% endblock %}

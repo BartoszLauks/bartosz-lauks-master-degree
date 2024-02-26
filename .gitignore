@@ -6,6 +6,19 @@
 /public/bundles/
 /var/
 /vendor/
+public/*
+!public/bfs
+!public/dfs
+!public/dijkstra
+!public/kruskal
+!public/prim
+!public/topological_sorting
+!public/bellman_ford
+!public/floyd_warshall
+!public/johnson
+!public/fleury
+supervisord.log
+supervisord.pid
 ###< symfony/framework-bundle ###
 
 ### PhpStorm ###

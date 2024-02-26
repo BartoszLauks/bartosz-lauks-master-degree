@@ -4,6 +4,26 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    uploads_dir_BFS: '%kernel.project_dir%/implementations/BFS/'
+    algorithms_dir_BFS: '%kernel.project_dir%/algorithms/BFS/'
+    uploads_dir_DFS: '%kernel.project_dir%/implementations/DFS/'
+    algorithms_dir_DFS: '%kernel.project_dir%/algorithms/DFS/'
+    uploads_dir_Dijkstra: '%kernel.project_dir%/implementations/Dijkstra/'
+    algorithms_dir_Dijkstra: '%kernel.project_dir%/algorithms/Dijkstra/'
+    uploads_dir_Kruskal: '%kernel.project_dir%/implementations/Kruskal/'
+    algorithms_dir_Kruskal: '%kernel.project_dir%/algorithms/Kruskal/'
+    uploads_dir_Prim: '%kernel.project_dir%/implementations/Prim/'
+    algorithms_dir_Prim: '%kernel.project_dir%/algorithms/Prim/'
+    uploads_dir_TopologicalSorting: '%kernel.project_dir%/implementations/TopologicalSorting/'
+    algorithms_dir_TopologicalSorting: '%kernel.project_dir%/algorithms/TopologicalSorting/'
+    uploads_dir_BellmanFord: '%kernel.project_dir%/implementations/BellmanFord/'
+    algorithms_dir_BellmanFord: '%kernel.project_dir%/algorithms/BellmanFord/'
+    uploads_dir_FloydWarshall: '%kernel.project_dir%/implementations/FloydWarshall/'
+    algorithms_dir_FloydWarshall: '%kernel.project_dir%/algorithms/FloydWarshall/'
+    uploads_dir_Johnson: '%kernel.project_dir%/implementations/Johnson/'
+    algorithms_dir_Johnson: '%kernel.project_dir%/algorithms/Johnson/'
+    uploads_dir_Fleury: '%kernel.project_dir%/implementations/Fleury/'
+    algorithms_dir_Fleury: '%kernel.project_dir%/algorithms/Fleury/'
 
 services:
     # default configuration for services in *this* file

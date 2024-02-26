@@ -17,3 +17,9 @@ services:
     container_name: bartosz-lauks-master-degree-nginx-stage
     ports:
       - '8082:80'
+
+  bartosz-lauks-master-degree-rabbitmq:
+    container_name: bartosz-lauks-master-degree-rabbitmq-stage
+    ports:
+      - '5672:5672'
+      - '15672:15672'

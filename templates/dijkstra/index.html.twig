@@ -1,0 +1,36 @@
+{% extends 'Header.html.twig' %}
+
+{% block title %}
+    Dijkstra Algorithm
+{% endblock %}
+
+{% block body %}
+    <h1>Algorytm Dijkstry </h1>
+
+    <p>Algorytm Dijkstry to algorytm znajdowania najkrótszej ścieżki w grafie o wagach nieujemnych.</p>
+
+    <ol>
+        <li><strong>Inicjalizacja:</strong>
+            - Ustaw wszystkie odległości na nieskończoność, oprócz startowego wierzchołka (odległość = 0).
+            - Utwórz zbiór nieodwiedzonych wierzchołków.</li>
+        <li><strong>Początkowy wierzchołek:</strong>
+            - Ustaw bieżący wierzchołek na startowy.</li>
+        <li><strong>Aktualizacja odległości:</strong>
+            - Dla każdego sąsiada bieżącego wierzchołka, oblicz nową odległość od startowego wierzchołka.
+            - Jeżeli nowa odległość jest mniejsza niż obecna, zaktualizuj odległość.</li>
+        <li><strong>Oznacz jako odwiedzone:</strong>
+            - Oznacz bieżący wierzchołek jako odwiedzony.</li>
+        <li><strong>Wybór nowego wierzchołka:</strong>
+            - Spośród nieodwiedzonych wierzchołków wybierz ten z najmniejszą odległością.</li>
+        <li><strong>Powtarzaj:</strong>
+            - Powtarzaj kroki 3-5, aż wszystkie wierzchołki zostaną odwiedzone lub osiągnięty zostanie cel.</li>
+    </ol>
+
+    <p>Po zakończeniu algorytmu, możesz odczytać najkrótsze ścieżki od źródła do pozostałych wierzchołków.</p>
+
+    <div id="mid-container">
+        <a href="{{ path('app_dijkstra_algorithm_create') }}">
+            <button class="btn btn-primary">Task</button>
+        </a>
+    </div>
+{% endblock %}

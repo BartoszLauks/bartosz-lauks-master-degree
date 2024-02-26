@@ -1,0 +1,32 @@
+{% extends 'Header.html.twig' %}
+
+{% block title %}
+    Search bar
+{% endblock %}
+
+{% block body %}
+    <div class="center-bar-test">
+        <h4>Find result</h4>
+    </div>
+
+    {% if users|default %}
+        {% set index = previous + 10 %}
+        {% for user in users %}
+            {% set index = 1 + index %}
+            <div class="card">
+                <p>{{ index }}.</p>
+                <h5 class="card-header">User : {{ user.name }} {{ user.surname }} ({{ user.email }})</h5>
+                <div class="card-body">
+                    <a href="{{ path('app_dashboard_user_tests', { uuid : user.uuid }) }}">
+                        <button class="btn btn-primary">Check</button>
+                    </a>
+                </div>
+
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="center-bar-warning">
+            <h4>Nothing found</h4>
+        </div>
+    {% endif %}
+{% endblock %}

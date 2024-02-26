@@ -1,0 +1,47 @@
+{% extends 'Header.html.twig' %}
+
+{% block title %}
+    Bellman FordAlgorithm
+{% endblock %}
+
+{% block body %}
+    <h1>Bellman-Ford Algorytm</h1>
+
+    <p>Algorytm Bellmana-Forda to algorytm służący do znajdowania najkrótszych ścieżek w grafie, nawet jeśli zawiera krawędzie o ujemnych wagach. Poniżej znajdziesz krok po kroku opis tego algorytmu:</p>
+    <ol>
+        <li><strong>Inicjalizacja:</strong>
+            <ul>
+                <li>Przypisz odległości od źródła do wszystkich innych wierzchołków na początku na <code>Infinity</code>, z wyjątkiem wierzchołka źródłowego, którego odległość ustaw na <code>0</code>.</li>
+                <li>Przypisz poprzedników dla każdego wierzchołka, na razie ustawiając je na brak (<code>null</code>).</li>
+            </ul>
+        </li>
+
+        <li><strong>Relaksacja krawędzi:</strong>
+            <ul>
+                <li>Powtarzaj relaksację dla każdej krawędzi (<code>(source, destination)</code>) w grafie, gdzie <code>source</code> to wierzchołek źródłowy, a <code>destination</code> to wierzchołek docelowy.</li>
+                <li>Relaksacja polega na sprawdzeniu, czy ścieżka do wierzchołka <code>destination</code> poprzez wierzchołek <code>source</code> jest krótsza niż obecnie znana odległość do <code>destination</code>. Jeśli tak, zaktualizuj odległość i poprzednika.</li>
+            </ul>
+        </li>
+
+        <li><strong>Powtórz kroki:</strong>
+            <ul>
+                <li>Powtórz kroki relaksacji dla wszystkich krawędzi <code>destination-1</code> razy, gdzie <code>destination</code> to liczba wierzchołków w grafie.</li>
+                <li>To zapewnia, że algorytm ma szansę zaktualizować wszystkie możliwe odległości.</li>
+            </ul>
+        </li>
+
+        <li><strong>Sprawdzenie cykli o ujemnej wadze:</strong>
+            <ul>
+                <li>Sprawdź, czy są cykle o ujemnej wadze w grafie. Możesz to zrobić, wykonując dodatkową iterację relaksacji krawędzi. Jeśli w tej iteracji wciąż można zaktualizować odległości, to znaczy, że graf zawiera cykl o ujemnej wadze.</li>
+            </ul>
+        </li>
+    </ol>
+
+    <p>Algorytm Bellmana-Forda jest stosunkowo prosty do zrozumienia i implementacji, ale jego złożoność czasowa wynosi O(V*E), gdzie V to liczba wierzchołków, a E to liczba krawędzi. W porównaniu do algorytmu Dijkstry, Bellman-Ford radzi sobie z grafami zawierającymi krawędzie o ujemnych wagach, ale jest mniej wydajny, zwłaszcza dla grafów o małej gęstości krawędzi.</p>
+
+    <div id="mid-container">
+        <a href="{{ path('app_bellman_ford_algorithm_create') }}">
+            <button class="btn btn-primary">Task</button>
+        </a>
+    </div>
+{% endblock %}

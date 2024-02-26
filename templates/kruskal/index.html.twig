@@ -1,0 +1,45 @@
+{% extends 'Header.html.twig' %}
+
+{% block title %}
+    Kruskal Algorithm
+{% endblock %}
+
+{% block body %}
+    <h1>Algorytm Kruskala</h1>
+
+    <p>Algorytm Kruskala to algorytm grafowy używany do znajdowania minimalnego drzewa rozpinającego w spójnym, ważonym grafie nieskierowanym. Minimalne drzewo rozpinające to drzewo o minimalnej sumie wag krawędzi, które łączą wszystkie wierzchołki grafu, bez cykli.</p>
+    <ol>
+        <li>
+            <strong>Sortowanie krawędzi:</strong>
+            <p>Posortuj wszystkie krawędzie grafu według ich wag, rosnąco.</p>
+        </li>
+        <li>
+            <strong>Inicjalizacja drzewa rozpinającego:</strong>
+            <p>Stwórz zbiór drzewa rozpinającego, zaczynając od pojedynczych wierzchołków.</p>
+        </li>
+        <li>
+            <strong>Przejście przez posortowane krawędzie:</strong>
+            <ol type="a">
+                <li>
+                    <strong>Sprawdzenie cyklu:</strong>
+                    <p>Sprawdź, czy dodanie aktualnej krawędzi nie spowoduje powstania cyklu w drzewie rozpinającym. Możesz to zrobić, porównując, czy oba końce krawędzi należą do różnych zbiorów (drzew) w strukturze zbioru rozłącznego (np. za pomocą algorytmu Union-Find).</p>
+                </li>
+                <li>
+                    <strong>Dodanie do drzewa rozpinającego:</strong>
+                    <p>Jeśli dodanie krawędzi nie spowoduje cyklu, dodaj ją do drzewa rozpinającego.</p>
+                </li>
+            </ol>
+        </li>
+        <li>
+            <strong>Powtarzanie kroków:</strong>
+            <p>Powtarzaj kroki 3a i 3b, aż wszystkie wierzchołki zostaną połączone i drzewo rozpinające będzie gotowe.</p>
+        </li>
+    </ol>
+    <p>Algorytm ten działa na zasadzie "żadnego cyklu" - stopniowo dodaje najmniejsze krawędzie, sprawdzając jednocześnie, czy nie tworzą one cykli. Algorytm ten jest egoistyczny w sensie, że zawsze wybiera najmniejszą krawędź, nie zawsze dbając o globalne optymalne rozwiązanie. Jednak w kontekście minimalnego drzewa rozpinającego, algorytm Kruskala zawsze znajduje optymalne rozwiązanie.</p>
+
+    <div id="mid-container">
+        <a href="{{ path('app_kruskal_algorithm_create') }}">
+            <button class="btn btn-primary">Task</button>
+        </a>
+    </div>
+{% endblock %}

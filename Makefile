@@ -22,13 +22,13 @@ composer_update:
 	COMPOSER_ALLOW_SUPERUSER=1 docker-compose exec -T bartosz-lauks-master-degree-php composer update --no-interaction --classmap-authoritative --optimize-autoloader
 
 build_dev_local:
-	docker-compose -f docker-compose.yaml -f docker-compose-dev.local.yaml build
+	docker-compose -f docker-compose.yaml -f docker-compose-dev-mac.yaml build
 
 start_dev_local:
 ifeq ($(OS),Darwin)
 	docker volume create --name=bartosz-lauks-master-degree-api-vendor-sync
 	docker volume create --name=bartosz-lauks-master-degree-api-app-sync
-	docker-compose -f docker-compose.yaml -f docker-compose-dev.local.yaml up -d --remove-orphans
+	docker-compose -f docker-compose.yaml -f docker-compose-dev-mac.yaml up -d --remove-orphans
 	docker-sync start
 else
 	docker-compose up -d
@@ -73,3 +73,6 @@ execphp:
 
 execdb:
 	docker-compose exec bartosz-lauks-master-degree-mysql bash
+
+start_queued_message_handling:
+	docker-compose exec -T bartosz-lauks-master-degree-php php bin/console messenger:consume async

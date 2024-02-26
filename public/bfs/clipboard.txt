@@ -1,0 +1,26 @@
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, u, v):
+        if u not in self.graph:
+            self.graph[u] = []
+        self.graph[u].append(v)
+
+
+def bfs(graph: Graph, start: int) -> []:
+# Your algorithm implementation
+
+if __name__ == '__main__':
+    graph = Graph()
+
+    graph.add_edge(0, 1)
+    graph.add_edge(0, 2)
+    graph.add_edge(1, 2)
+    graph.add_edge(2, 0)
+    graph.add_edge(2, 3)
+    graph.add_edge(3, 3)
+
+    print(bfs(graph, 0))
+    # Result for this main:
+    # [0, 1, 2, 3]
