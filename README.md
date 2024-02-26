@@ -1,3 +1,11 @@
+# bartosz-lauks-master-degree
+
+Projekt magisterski Bartosz Lauks 2024
+
+Polecenia należy wykonąć w docelowym katalogu aplikacji
+
+Aplikacja do uruchomienia wymaga Dockera
+
 ## LISTA ALGORYTMOW
 
 - Przeszukiwanie w szerz (Breadth-First Search, BFS) +
@@ -12,36 +20,27 @@
 - Algorytm Floyd-Warshalla +
 - Algorytm Topologicznego Sortowania +
 
-### Testowanie
-- Graf pusty:
-
-Sprawdź, jak algorytm BFS zachowuje się w przypadku całkowicie pustego grafu (bez wierzchołków i krawędzi).
-
-- Graf z jednym wierzchołkiem:
-
-Utwórz graf z jednym wierzchołkiem i przetestuj algorytm BFS, zaczynając od tego jedynego wierzchołka. Upewnij się, że algorytm działa poprawnie i zwraca ten sam wierzchołek jako wynik.
-
-- Brak ścieżki między wierzchołkami:
-
-Utwórz graf, w którym nie istnieje ścieżka między wierzchołkami, które próbujesz odwiedzić. Sprawdź, czy algorytm BFS zwraca wartość None w takim przypadku.
-
-- Wierzchołek końcowy jest wierzchołkiem początkowym:
-
-Sprawdź, jak algorytm BFS reaguje, gdy wierzchołek początkowy i wierzchołek końcowy są tym samym wierzchołkiem. Czy algorytm obsługuje ten przypadek poprawnie?
-
-- Graf niespójny:
-
-Utwórz graf niespójny, który składa się z dwóch lub więcej składowych. Przetestuj algorytm BFS na takim grafie i upewnij się, że działa poprawnie, odwiedzając tylko wierzchołki w jednej składowej, zaczynając od odpowiedniego wierzchołka początkowego.
-
-## Wstępna dokumentacja
 ### Błąd przy budowaniu aplikacji
 - Jeśli pojawi sie bład przy budowanu aplikacji wykonaj budowanie ponownie. Bład obrazu Docker
 
-## Broker Wiadomości
-### Włączenie konsumenta wiadomości
-- php bin/console messenger:consume async
-- php bin/console messenger:consume async -vv // with details what's happening
-
-- ### Dostęp do konsoli admina RabbitMQ
+### Dostęp do konsoli admina RabbitMQ
 - http://localhost:15672/
-- Username: guest Password: guest 
+
+**Pierwszy start aplikacji**
+```
+$ make build_dev
+$ make start_dev # http://localhost:8083
+$ make install
+```
+**Wdrażanie backup z danymi testowymi bez plików wyników testów**
+```
+cat backup.sql | docker exec -i bartosz-lauks-master-degree-mysql-dev /usr/bin/mysql -u root bartosz-lauks-master-degree_dev
+```
+**Lista użytkowników w tym backup i ich hasła**
+- bartosz.lauks@interia.pl hasło : 123123 -> User
+- cruzonek@gmail.com hasło : 123123 -> Super User
+
+**Wyłączenie aplikacji**
+```
+$ make stop
+```

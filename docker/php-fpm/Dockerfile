@@ -43,7 +43,7 @@ RUN "date"
 
 CMD crond -b && rsyslogd && php-fpm
 
-#CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
 
 # Install python/pip
 ENV PYTHONUNBUFFERED=1
