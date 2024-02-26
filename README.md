@@ -28,7 +28,7 @@ Aplikacja do uruchomienia wymaga Dockera
 
 **Pierwszy start aplikacji**
 ```
-$ make build_dev
+$ make build_dev - jeśli pojawia się błąd przejdź na branch master-non-root
 $ make start_dev # http://localhost:8083
 $ make install
 ```
