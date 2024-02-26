@@ -46,6 +46,11 @@ make start_queued_message_handling
 - bartosz.lauks@interia.pl hasło : 123123 -> User
 - cruzonek@gmail.com hasło : 123123 -> Super User
 
+**Do działania systemu rejestracji i weryfikacji konta wymagane jest dodanie w plikiu .env MAILER_DSN**
+```
+MAILER_DSN=gmail://EMAIL@gmail.com:HASŁO@default
+```
+
 **Wyłączenie aplikacji**
 ```
 $ make stop
