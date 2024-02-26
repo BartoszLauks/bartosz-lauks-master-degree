@@ -40,6 +40,11 @@ cat backup.sql | docker exec -i bartosz-lauks-master-degree-mysql-dev /usr/bin/m
 - bartosz.lauks@interia.pl hasło : 123123 -> User
 - cruzonek@gmail.com hasło : 123123 -> Super User
 
+**Do działania systemu rejestracji i weryfikacji konta wymagane jest dodanie w plikiu .env MAILER_DSN**
+```
+MAILER_DSN=gmail://EMAIL@gmail.com:HASŁO@default
+```
+
 **Wyłączenie aplikacji**
 ```
 $ make stop
