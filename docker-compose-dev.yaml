@@ -5,6 +5,10 @@ services:
     container_name: bartosz-lauks-master-degree-mysql-dev
     ports:
       - '33063:3306'
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
 
   bartosz-lauks-master-degree-php:
     container_name: bartosz-lauks-master-degree-php-dev
