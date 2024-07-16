@@ -1,6 +1,17 @@
 # bartosz-lauks-master-degree
 
-Projekt magisterski Bartosz Lauks 2024
+## Design and implementation of a test platform intended for testing graph algorithms
+
+Celem niniejszej pracy jest opracowanie i implementacja platformy testowej przeznaczonej do
+testowania algorytmów grafowych. Aplikacja posiada szeroką gamę gotowych narzędzi do te-
+stowania implementacji algorytmów grafowych od testów jednostkowych, obciążeniowych do
+testów złożoności obliczeniowych i na podstawie ich tworzy statystyki oraz wykresy. Posiada
+także czytelne GUI obrazujące krok po kroku proces testowania, wskazując popełnione błędy w
+przypadku niepoprawnego wyniku testu. Oprogramowanie jest zaprojektowane tak, aby mogło
+uruchamiać się na dowolnej platformie bez znaczenia na system operacyjny.
+Słowa kluczowe: PHP, Python, Algorytm, Graf, Docker, Symfony, MyS
+
+## Projekt magisterski Bartosz Lauks 2024
 
 Polecenia należy wykonąć w docelowym katalogu aplikacji
 
@@ -49,3 +60,19 @@ MAILER_DSN=gmail://EMAIL@gmail.com:HASŁO@default
 ```
 $ make stop
 ```
+
+======================================Author note v2 app==================================================
+
+**feature, to change, ideas**
+
+- Testing all algorithms of all types.
+- Increasing the stack of programming languages ​​used to implement algorithms.
+- Added data structure selection for algorithm testing. Consider default tests on all or almost all data structures. (Is it possible? Unlikely, requires several dedicated implementations)
+- Adding a production analyzer of used resources (savings, unexpected, caught loops, etc.)
+- Adding a code (static) analyzer (AST tree). (It gives better validation and saves resources.). ()
+- Complexity analysis based on the code "Is it possible? Suspected undecidability"
+- Improving the testing process. The steps themselves, but also the architecture (microservice).
+- Ask the professor about functional requirements are. (Student use, license):
+- Cont.
+
+======================================V2 priv repo===============================================
