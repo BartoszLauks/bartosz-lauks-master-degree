@@ -3,8 +3,7 @@
 ## Design and implementation of a test platform intended for testing graph algorithms
 
 Celem niniejszej pracy jest opracowanie i implementacja platformy testowej przeznaczonej do
-testowania algorytmów grafowych. Aplikacja posiada szeroką gamę gotowych narzędzi do te-
-stowania implementacji algorytmów grafowych od testów jednostkowych, obciążeniowych do
+testowania algorytmów grafowych. Aplikacja posiada szeroką gamę gotowych narzędzi do testowania implementacji algorytmów grafowych od testów jednostkowych, obciążeniowych do
 testów złożoności obliczeniowych i na podstawie ich tworzy statystyki oraz wykresy. Posiada
 także czytelne GUI obrazujące krok po kroku proces testowania, wskazując popełnione błędy w
 przypadku niepoprawnego wyniku testu. Oprogramowanie jest zaprojektowane tak, aby mogło
